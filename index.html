@@ -18,6 +18,8 @@
             --color-accent: #bfa071;
             --font-serif: 'Noto Serif JP', serif;
             --font-eng: 'Playfair Display', serif;
+            --header-height: 90px;
+            --header-height-sp: 70px;
         }
 
         body {
@@ -36,30 +38,31 @@
             opacity: 0.12; pointer-events: none; z-index: 9999;
         }
 
+        /* --- ヘッダー：スマホ対応・横並び調整 --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
-            z-index: 1000;
-            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0) 100%);
-            min-height: 90px;
+            padding: 0 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
+            z-index: 2000;
+            background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%);
+            height: var(--header-height);
         }
 
         .logo-image {
-            height: 45px; 
+            height: 40px; /* 少し控えめなサイズに固定 */
             width: auto;
             display: block;
             opacity: 0.95;
             filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
         }
 
-        nav ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
+        nav ul { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; }
         nav ul li a { 
             text-decoration: none; color: #fff; font-size: 0.75rem; 
             letter-spacing: 0.15em; transition: 0.5s; opacity: 0.75; 
-            font-weight: 400;
         }
         nav ul li a:hover { opacity: 1; color: var(--color-accent); }
 
+        /* --- メインスライドショー --- */
         .hero-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -2;
         }
@@ -67,7 +70,7 @@
         .slide {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            opacity: 0; transform: scale(1.15);
+            opacity: 0; transform: scale(1.1);
             transition: opacity 2.5s ease-in-out, transform 10s ease-out;
         }
 
@@ -75,19 +78,17 @@
 
         .content-wrapper { position: relative; z-index: 10; }
 
+        /* --- キャッチコピーセクション --- */
         .section-copy {
             height: 100vh; display: flex; align-items: center; box-sizing: border-box;
+            position: relative; z-index: 5; 
         }
 
         .copy-vertical {
             writing-mode: vertical-rl;
             font-family: var(--font-serif);
-            font-size: 1.7rem;
-            font-weight: 200;
-            letter-spacing: 0.5em;
-            color: #fff;
-            line-height: 2.2;
-            position: relative;
+            font-size: 1.7rem; font-weight: 200; letter-spacing: 0.5em;
+            color: #fff; line-height: 2.2; position: relative;
         }
 
         .copy-vertical::before {
@@ -97,104 +98,73 @@
 
         .copy-horizontal {
             font-family: var(--font-serif);
-            font-size: 1.6rem;
-            font-weight: 200;
-            letter-spacing: 0.4em;
-            color: #fff;
-            text-align: center;
-            width: 100%;
-            position: relative;
+            font-size: 1.6rem; font-weight: 200; letter-spacing: 0.4em;
+            color: #fff; text-align: center; width: 100%;
         }
 
         .copy-horizontal::after {
             content: ""; display: block; width: 40px; height: 1px; background: var(--color-accent); margin: 40px auto 0;
         }
 
+        /* 改行制御クラス */
+        .br-pc { display: block; }
+        .br-sp { display: none; }
+
         .pos-left { padding-left: 12%; justify-content: flex-start; }
         .pos-right { padding-right: 12%; justify-content: flex-end; }
         .pos-center { justify-content: center; }
 
-        /* ★はじめましてセクションの再調整 */
-        .intro-section { padding: 180px 0; background: transparent; overflow: hidden; }
-
-        .intro-container {
-            max-width: 1200px; margin: 0 auto; display: flex; gap: 100px; padding: 0 60px; align-items: center;
-        }
-
-        .intro-image-wrap { 
-            flex: 1; position: relative; 
-            display: flex; justify-content: center; align-items: center;
-        }
-
-        /* 画像の背後に繊細な枠線を配置 */
+        /* --- はじめましてセクション --- */
+        .intro-section { padding: 180px 0; background: transparent; position: relative; z-index: 10; }
+        .intro-container { max-width: 1200px; margin: 0 auto; display: flex; gap: 100px; padding: 0 60px; align-items: center; }
+        .intro-image-wrap { flex: 1; position: relative; }
         .intro-image-wrap::after {
             content: ""; position: absolute; top: 20px; left: 20px; width: 100%; height: 100%;
             border: 1px solid var(--color-accent); z-index: -1; opacity: 0.4;
         }
-
-        .intro-image-wrap img {
-            width: 100%; height: auto; border-radius: 2px;
-            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.8);
-        }
-
+        .intro-image-wrap img { width: 100%; height: auto; border-radius: 2px; box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.8); }
         .intro-text { flex: 1.2; }
-
-        .intro-text .section-num {
-            font-family: var(--font-eng); color: var(--color-accent); font-size: 0.9rem;
-            display: block; margin-bottom: 20px; letter-spacing: 0.2em;
-        }
-
-        .intro-text h2 {
-            font-family: var(--font-serif); font-size: 2.2rem; font-weight: 400;
-            margin-bottom: 50px; line-height: 1.6; letter-spacing: 0.1em; color: #fff;
-        }
-
-        .intro-text p {
-            font-size: 0.95rem; line-height: 2.4; color: #bbb; font-weight: 300; margin-bottom: 2rem;
-            text-align: justify;
-        }
-
+        .intro-text .section-num { font-family: var(--font-eng); color: var(--color-accent); font-size: 0.8rem; margin-bottom: 20px; display: block; letter-spacing: 0.2em; }
+        .intro-text h2 { font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 50px; line-height: 1.6; color: #fff; font-weight: 400; }
+        .intro-text p { font-size: 0.95rem; line-height: 2.4; color: #bbb; margin-bottom: 2rem; text-align: justify; }
         .intro-text p b { color: #fff; font-weight: 500; font-size: 1.1rem; }
 
-        /* 住所情報 */
-        .info-section { background: #000; padding: 150px 80px; border-top: 1px solid #1a1a1a; }
-
-        .info-grid {
-            max-width: 1300px; margin: 0 auto;
-            display: grid; grid-template-columns: 320px 1fr; gap: 40px;
-        }
-
+        .info-section { background: #000; padding: 150px 80px; border-top: 1px solid #1a1a1a; position: relative; z-index: 10; }
+        .info-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
         .info-title { font-family: var(--font-serif); font-size: 1.3rem; letter-spacing: 0.3em; color: var(--color-accent); }
-
         .office-list { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
         .office-item { margin-bottom: 40px; }
-        .office-item h3 { 
-            font-size: 0.8rem; color: #fff; letter-spacing: 0.1em; margin-bottom: 15px; 
-            font-family: var(--font-serif); border-bottom: 1px solid #222; padding-bottom: 10px;
-        }
+        .office-item h3 { font-size: 0.8rem; color: #fff; font-family: var(--font-serif); border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 15px; }
         .office-item .sub-name { font-size: 0.85rem; color: #eee; margin-bottom: 10px; font-weight: 500; }
-        .office-item .address-jp { font-size: 0.8rem; color: #aaa; margin: 0; line-height: 1.8; }
-        .office-item .address-en { 
-            font-size: 0.7rem; color: #666; margin: 5px 0 0 0; line-height: 1.6; 
-            font-family: var(--font-eng); font-style: italic;
-        }
+        .office-item .address-jp { font-size: 0.8rem; color: #aaa; line-height: 1.8; margin: 0; }
 
-        footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; font-family: var(--font-serif); }
+        footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; font-family: var(--font-serif); background: #000; }
 
-        @media (max-width: 992px) {
-            .intro-container { flex-direction: column; gap: 60px; padding: 0 40px; }
-            .intro-image-wrap::after { display: none; }
-            .intro-text h2 { font-size: 1.8rem; }
-        }
-
+        /* --- スマホレスポンシブ：ここを大幅に改善 --- */
         @media (max-width: 768px) {
-            header { padding: 15px 30px; flex-direction: column; gap: 12px; }
-            .logo-image { height: 38px; }
-            nav ul { gap: 15px; flex-wrap: wrap; justify-content: center; }
-            .info-grid { grid-template-columns: 1fr; }
-            .office-list { grid-template-columns: 1fr; }
+            header {
+                padding: 0 20px;
+                height: var(--header-height-sp);
+                background: rgba(0,0,0,0.8); /* スマホは透過を抑えて視認性アップ */
+            }
+            .logo-image { height: 32px; }
+            nav ul { gap: 12px; }
+            nav ul li a { font-size: 0.65rem; letter-spacing: 0.05em; }
+
+            .intro-container { flex-direction: column; gap: 50px; padding: 0 30px; }
+            .intro-image-wrap::after { display: none; }
+            .intro-text h2 { font-size: 1.8rem; margin-bottom: 30px; }
+
             .copy-vertical { font-size: 1.4rem; }
-            .copy-horizontal { font-size: 1.2rem; }
+            .copy-horizontal { font-size: 1.3rem; }
+
+            /* スマホでの改行位置を調整 */
+            .br-pc { display: none; }
+            .br-sp { display: block; }
+
+            .info-grid { grid-template-columns: 1fr; }
+            .office-list { grid-template-columns: 1fr; gap: 40px; }
+            .info-section { padding: 100px 40px; }
         }
     </style>
 </head>
@@ -237,7 +207,7 @@
 
     <section class="section-copy pos-center">
         <div class="copy-horizontal" data-aos="fade-up" data-aos-duration="2000">
-            森を活かし、暮らしを「勝」つ。
+            森を活かし、暮らしを<br class="br-pc">「勝」つ。
         </div>
     </section>
 
@@ -247,26 +217,13 @@
                 <img src="IMG_9093.JPG" alt="Heritage Wood Detail">
             </div>
             <div class="intro-text">
-                <span class="section-num" data-aos="fade-in" data-aos-delay="200">01 / INTRODUCTION</span>
-                <h2 data-aos="fade-up" data-aos-delay="400">はじめまして、<br>勝一商店です。</h2>
+                <span class="section-num" data-aos="fade-in">01 / INTRODUCTION</span>
+                <h2 data-aos="fade-up" data-aos-delay="200">はじめまして、<br>勝一商店です。</h2>
                 
-                <div data-aos="fade-up" data-aos-delay="600">
-                    <p>
-                        たとえば、古い梁に刻まれた傷跡に。<br>
-                        たとえば、北海道の森が育てた木の手触りに。<br>
-                        長い時間を旅してきたものだけが持つ、<br>
-                        静かな美しさがあります。
-                    </p>
-                    <p>
-                        「捨てる」という言葉を、「活かす」という意志に変えてみる。<br>
-                        それは、かつて誰かが紡いだ想いを受け継ぎ、<br>
-                        新しいあなたの物語を重ねていくということ。
-                    </p>
-                    <p>
-                        <b>「この暮らしで、よかった」</b><br>
-                        自分らしく生きることを、一途に選ぶ人のために。<br>
-                        森を活かし、暮らしを「勝」つ。
-                    </p>
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <p>たとえば、古い梁に刻まれた傷跡に。<br>たとえば、北海道の森が育てた木の手触りに。<br>長い時間を旅してきたものだけが持つ、静かな美しさがあります。</p>
+                    <p>「捨てる」という言葉を、「活かす」という意志に変えてみる。<br>それは、かつて誰かが紡いだ想いを受け継ぎ、新しいあなたの物語を重ねていくということ。</p>
+                    <p><b>「この暮らしで、よかった」</b><br>自分らしく生きることを、一途に選ぶ人のために。<br>森を活かし、暮らしを「勝」つ。</p>
                 </div>
             </div>
         </div>
@@ -280,13 +237,11 @@
                     <h3>MIDCITY Office</h3>
                     <div class="sub-name">勝一商店株式会社</div>
                     <p class="address-jp">〒070-0825 北海道旭川市北門町１３丁目２９４１−９</p>
-                    <p class="address-en">13-2941-9 Hokumon-cho Asahikawa-shi Hokkaido 070-0825 Japan</p>
                 </div>
                 <div class="office-item">
                     <h3>東川町サテライトオフィス</h3>
                     <div class="sub-name">KAGUの家　ULTRA BUSSANTEN</div>
                     <p class="address-jp">〒071-1423 北海道上川郡東川町東町1丁目7番17号(C棟)</p>
-                    <p class="address-en">1-7-17-C Higashikawa-cho Kamikawa-gun Hokkaido 071-1423 Japan</p>
                 </div>
             </div>
         </div>
@@ -299,11 +254,7 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({
-        duration: 1500,
-        once: false,
-        offset: 100
-    });
+    AOS.init({ duration: 1500, once: false, offset: 100 });
 
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
@@ -313,6 +264,23 @@
         slides[currentIndex].classList.add('active');
     }
     setInterval(nextSlide, 6000);
+
+    // スクロール時のフェードアウトギミック
+    window.addEventListener('scroll', function() {
+        const scroll = window.scrollY;
+        const copies = document.querySelectorAll('.copy-vertical, .copy-horizontal');
+        const headerH = window.innerWidth <= 768 ? 70 : 90; // スマホとPCで基準を変える
+        
+        copies.forEach(copy => {
+            const rect = copy.getBoundingClientRect();
+            if (rect.top < 250) {
+                const opacity = Math.max(0, (rect.top - headerH) / 160);
+                copy.style.opacity = opacity;
+            } else {
+                copy.style.opacity = 1;
+            }
+        });
+    });
 </script>
 
 </body>

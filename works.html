@@ -1,1 +1,291 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORKS | 勝一商店株式会社</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #0a0a0a;
+            --color-text: #ffffff;
+            --color-accent: #bfa071;
+            --font-serif: 'Noto Serif JP', serif;
+            --font-eng: 'Playfair Display', serif;
+            --header-height: 90px;
+            --header-height-sp: 70px;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* 共通の粒子テクスチャ */
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.08; pointer-events: none; z-index: 9999;
+        }
+
+        /* --- ヘッダー（全ページ共通） --- */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
+            z-index: 2000; height: var(--header-height);
+            background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo-image { height: 40px; width: auto; transition: 0.3s; }
+        .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
+        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; opacity: 0.6; transition: 0.5s; }
+        .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
+
+        .menu-trigger { display: none; width: 30px; height: 24px; position: relative; z-index: 3000; background: none; border: none; cursor: pointer; }
+        .menu-trigger span { position: absolute; left: 0; width: 100%; height: 1px; background-color: #fff; transition: 0.4s; }
+        .menu-trigger span:nth-of-type(1) { top: 0; }
+        .menu-trigger span:nth-of-type(2) { top: 11px; }
+        .menu-trigger span:nth-of-type(3) { bottom: 0; }
+        .menu-trigger.active span:nth-of-type(1) { transform: translateY(11px) rotate(-45deg); }
+        .menu-trigger.active span:nth-of-type(2) { opacity: 0; }
+        .menu-trigger.active span:nth-of-type(3) { transform: translateY(-12px) rotate(45deg); }
+
+        .nav-sp { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: rgba(10, 10, 10, 0.98); z-index: 2500; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; visibility: hidden; }
+        .nav-sp.active { right: 0; visibility: visible; }
+        .nav-sp ul { list-style: none; padding: 0; text-align: center; }
+        .nav-sp ul li { margin-bottom: 30px; }
+        .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; font-family: var(--font-serif); letter-spacing: 0.2em; }
+
+        /* --- ヒーローエリア --- */
+        .page-header {
+            height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative; overflow: hidden; margin-top: var(--header-height);
+        }
+        .page-header-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('DSCF0613.JPEG') center/cover;
+            z-index: -1; animation: heroSlowZoom 20s infinite alternate;
+        }
+        @keyframes heroSlowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+        .page-header h1 { font-family: var(--font-serif); font-size: 3rem; letter-spacing: 0.3em; margin: 0; font-weight: 200; }
+        .page-header span { font-family: var(--font-eng); color: var(--color-accent); font-size: 0.9rem; letter-spacing: 0.6em; margin-top: 15px; opacity: 0.8; }
+
+        /* --- コンセプトリード --- */
+        .works-intro { max-width: 800px; margin: 120px auto; text-align: center; padding: 0 40px; }
+        .works-intro h2 { font-family: var(--font-serif); font-size: 1.8rem; letter-spacing: 0.2em; margin-bottom: 40px; font-weight: 400; }
+        .works-intro p { font-size: 0.95rem; color: #999; line-height: 2.2; }
+
+        /* --- 施工事例グリッド --- */
+        .works-section { max-width: 1300px; margin: 0 auto 150px; padding: 0 40px; }
+        
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 80px 60px;
+        }
+
+        .work-item { position: relative; text-decoration: none; display: block; overflow: hidden; }
+
+        .work-image {
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            position: relative;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .work-image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: grayscale(100%) brightness(0.6) blur(2px); /* Coming Soon用の演出 */
+            opacity: 0.5;
+        }
+
+        /* Coming Soon オーバーレイ */
+        .coming-soon-label {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 10px 30px;
+            font-family: var(--font-eng);
+            letter-spacing: 0.4em;
+            font-size: 0.8rem;
+            z-index: 10;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        .work-item:hover .work-image img {
+            filter: grayscale(0%) brightness(0.8) blur(0);
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+
+        .work-item:hover .coming-soon-label {
+            background: var(--color-accent);
+            color: #000;
+        }
+
+        .work-info { margin-top: 30px; }
+        .work-category {
+            font-family: var(--font-eng); color: var(--color-accent); font-size: 0.75rem; 
+            letter-spacing: 0.3em; margin-bottom: 10px; display: block;
+        }
+        .work-title {
+            font-family: var(--font-serif); font-size: 1.3rem; color: #fff; font-weight: 400;
+            letter-spacing: 0.1em;
+        }
+        .work-desc { font-size: 0.8rem; color: #666; margin-top: 10px; letter-spacing: 0.05em; }
+
+        /* --- お問い合わせ誘導 --- */
+        .works-cta {
+            padding: 150px 0; border-top: 1px solid #1a1a1a; text-align: center;
+        }
+        .cta-title { font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 40px; }
+        .btn-gold {
+            display: inline-block; padding: 20px 60px; border: 1px solid var(--color-accent);
+            color: var(--color-accent); text-decoration: none; font-size: 0.8rem;
+            letter-spacing: 0.3em; transition: 0.5s; font-family: var(--font-serif);
+        }
+        .btn-gold:hover { background: var(--color-accent); color: #000; }
+
+        footer { padding: 80px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; border-top: 1px solid #1a1a1a; }
+
+        @media (max-width: 768px) {
+            header { padding: 0 30px; height: var(--header-height-sp); }
+            .nav-pc { display: none; }
+            .menu-trigger { display: block; }
+            .page-header h1 { font-size: 2.2rem; }
+            .works-grid { grid-template-columns: 1fr; gap: 60px; }
+            .work-image { aspect-ratio: 1 / 1; }
+            .works-intro { margin: 80px auto; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html"><img src="看板_540×450mm_1_out_1-01.png" alt="Logo" class="logo-image"></a>
+    <nav class="nav-pc">
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="business.html">事業内容</a></li>
+            <li><a href="works.html">施工事例</a></li>
+            <li><a href="about.html">会社案内</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+    </nav>
+    <button class="menu-trigger" id="js-hamburger"><span></span><span></span><span></span></button>
+</header>
+
+<nav class="nav-sp" id="js-nav-sp">
+    <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="business.html">事業内容</a></li>
+        <li><a href="works.html">施工事例</a></li>
+        <li><a href="about.html">会社案内</a></li>
+        <li><a href="contact.html">お問い合わせ</a></li>
+    </ul>
+</nav>
+
+<div class="page-header">
+    <div class="page-header-bg"></div>
+    <h1 data-aos="fade-up" data-aos-duration="1500">施工事例</h1>
+    <span data-aos="fade-up" data-aos-delay="300" data-aos-duration="1500">SELECTED WORKS</span>
+</div>
+
+<div class="works-intro" data-aos="fade-up">
+    <h2>「時をリノベートする」<br>その軌跡と、空間の記録。</h2>
+    <p>
+        私たちは、ただ建物を建てるのではありません。そこに流れる時間を読み解き、素材の記憶を活かし、未来の暮らしをデザインします。これまで手掛けてきた、唯一無二の空間たちをご紹介します。
+    </p>
+</div>
+
+<div class="works-section">
+    <div class="works-grid">
+        
+        <div class="work-item" data-aos="fade-up">
+            <div class="work-image">
+                <img src="IMG_5250.JPG" alt="Project 1">
+                <div class="coming-soon-label">COMING SOON</div>
+            </div>
+            <div class="work-info">
+                <span class="work-category">RESIDENTIAL</span>
+                <h3 class="work-title">道産材を活かした呼吸する家</h3>
+                <p class="work-desc">旭川 / 住宅デザイン・施工</p>
+            </div>
+        </div>
+
+        <div class="work-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="work-image">
+                <img src="IMG_0538.jpg" alt="Project 2">
+                <div class="coming-soon-label">COMING SOON</div>
+            </div>
+            <div class="work-info">
+                <span class="work-category">VACATION RENTAL</span>
+                <h3 class="work-title">記憶を紡ぐ、築50年の古民家再生</h3>
+                <p class="work-desc">東川 / 民泊プロデュース・リノベーション</p>
+            </div>
+        </div>
+
+        <div class="work-item" data-aos="fade-up">
+            <div class="work-image">
+                <img src="IMG_7222.jpg" alt="Project 3">
+                <div class="coming-soon-label">COMING SOON</div>
+            </div>
+            <div class="work-info">
+                <span class="work-category">COMMERCIAL</span>
+                <h3 class="work-title">森の気配を纏うサウナ・ラウンジ</h3>
+                <p class="work-desc">旭川 / サウナ設計・店舗施工</p>
+            </div>
+        </div>
+
+        <div class="work-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="work-image">
+                <img src="IMG_9093.JPG" alt="Project 4">
+                <div class="coming-soon-label">COMING SOON</div>
+            </div>
+            <div class="work-info">
+                <span class="work-category">FURNITURE / ART</span>
+                <h3 class="work-title">造作家具とLyna Woodの調和</h3>
+                <p class="work-desc">オーダー家具設計・施工</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<section class="works-cta" data-aos="fade-up">
+    <h2 class="cta-title">あなたの空間を、<br>共にデザインしませんか。</h2>
+    <a href="contact.html" class="btn-gold">CONTACT</a>
+</section>
+
+<footer>&copy; 勝一商店株式会社 ALL RIGHTS RESERVED.</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1500, once: false, offset: 100 });
+    
+    const hamburger = document.getElementById('js-hamburger');
+    const navSp = document.getElementById('js-nav-sp');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navSp.classList.toggle('active');
+        document.body.classList.toggle('nav-open');
+    });
+</script>
+</body>
+</html>

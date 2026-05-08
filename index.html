@@ -6,102 +6,176 @@
     <title>勝一商店株式会社</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Noto+Sans+JP:wght@400&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
+        /* 基本設定 */
         :root {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --accent-color: #bfa071;
+            --text-color: #ffffff; /* 文字は真っ白 */
+            --accent-color: #bfa071; /* 上品な真鍮色 */
             --font-serif: 'Noto Serif JP', serif;
         }
 
         body {
-            margin: 0; background-color: var(--bg-color); color: var(--text-color);
-            font-family: 'Noto Sans JP', sans-serif; line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* ★背景を真っ黒に強制 */
+            color: var(--text-color);
+            font-family: 'Noto Sans JP', sans-serif;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* ヘッダー */
+        /* ヘッダー（最前面に配置） */
         header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 50px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
-            z-index: 1000; background: rgba(18, 18, 18, 0.5); backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 100; /* 文字より前に */
+            background: rgba(0, 0, 0, 0.6); /* 半透明の黒背景 */
+            backdrop-filter: blur(10px); /* ぼかし効果 */
         }
 
-        .header-logo-wrap { display: flex; align-items: center; }
-        .logo-text { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700; letter-spacing: 0.1em; }
+        .logo-text {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--text-color);
+            text-decoration: none;
+        }
 
-        nav ul { list-style: none; display: flex; margin: 0; }
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
         nav ul li { margin-left: 30px; }
-        nav ul li a { text-decoration: none; color: var(--text-color); font-size: 0.85rem; letter-spacing: 0.1em; }
 
-        /* スライドショー背景（固定） */
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover { color: var(--accent-color); }
+
+        /* =========================================
+           背景固定スライドショーの設定
+        ========================================= */
         .hero-container {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: -1; /* 背面に固定 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -2; /* ★一番奥に配置 */
+            overflow: hidden;
         }
 
         .slide {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 2s ease-in-out;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 2s ease-in-out; /* ふわっと切り替わる時間 */
         }
 
         .slide.active { opacity: 1; }
 
-        /* 全体にかける暗いフィルター */
+        /* スライドショーの上にかける暗いフィルター */
         .hero-container::after {
-            content: ''; position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* ★50%の黒で写真を暗くする */
+            z-index: -1; /* スライドより前、文字より後ろ */
         }
 
-        /* スクロールコンテンツ */
-        .scroll-section {
-            height: 100vh; /* 1画面分 */
-            display: flex; align-items: center;
+        /* =========================================
+           スクロールコンテンツ（文字）の設定
+        ========================================= */
+        .content-wrapper {
             position: relative;
+            z-index: 1; /* ★スライドショーより前に配置 */
+            width: 100%;
+        }
+
+        .scroll-section {
+            height: 100vh; /* 画面ぴったり */
+            display: flex;
+            align-items: center;
             padding: 0 10%;
+            box-sizing: border-box;
         }
 
         /* キャッチコピー（縦書き） */
         .copy-text {
             font-family: var(--font-serif);
-            font-size: 3.5rem;
-            letter-spacing: 0.5em;
-            writing-mode: vertical-rl;
+            font-size: 3.8rem; /* 大きく格好良く */
+            letter-spacing: 0.5em; /* 文字間隔を広く */
+            writing-mode: vertical-rl; /* 縦書き */
             text-combine-upright: all;
             white-space: nowrap;
-            text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
+            color: #ffffff; /* ★真っ白 */
+            /* ★強力な文字の影（背景が明るくても読めるように） */
+            text-shadow: 0 0 15px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,1);
+            line-height: 1;
         }
 
-        /* 表示位置をバラバラにする設定 */
+        /* 配置のパターン */
         .pos-left { justify-content: flex-start; }
-        .pos-center { justify-content: center; }
         .pos-right { justify-content: flex-end; }
+        .pos-center { justify-content: center; }
 
+        /* フッター */
         footer {
-            text-align: center; padding: 50px; background: #121212;
-            font-size: 0.7rem; color: #888;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px;
+            background: #000;
+            font-size: 0.8rem;
+            color: #666;
         }
 
+        /* スマホ対応（レスポンシブ） */
         @media (max-width: 768px) {
-            .copy-text { font-size: 2rem; }
-            header { padding: 15px 20px; }
+            header { padding: 15px 20px; flex-direction: column; }
+            .logo-text { font-size: 1.2rem; margin-bottom: 10px; }
             nav ul li { margin-left: 15px; }
+            nav ul li a { font-size: 0.8rem; }
+            
+            .copy-text {
+                font-size: 2.2rem; /* スマホでは小さく */
+                letter-spacing: 0.3em;
+            }
+            .scroll-section { padding: 0 5%; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="header-logo-wrap">
-        <div class="logo-text">勝一商店株式会社</div>
-    </div>
+    <a href="index.html" class="logo-text">勝一商店株式会社</a>
     <nav>
         <ul>
             <li><a href="index.html">HOME</a></li>
@@ -119,49 +193,55 @@
     <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1582238473724-4f8e53488730?q=60&w=800');"></div>
 </div>
 
-<section class="scroll-section pos-left">
-    <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
-        物語の続きを、あなたと描く。
-    </div>
-</section>
+<div class="content-wrapper">
+    
+    <section class="scroll-section pos-left">
+        <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
+            物語の続きを、あなたと描く。
+        </div>
+    </section>
 
-<section class="scroll-section pos-right">
-    <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
-        時をリノベートする。<br>人生をデザインする。
-    </div>
-</section>
+    <section class="scroll-section pos-right">
+        <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
+            時をリノベートする。<br>人生をデザインする。
+        </div>
+    </section>
 
-<section class="scroll-section pos-center">
-    <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
-        森を活かし、暮らしを「勝」つ。
-    </div>
-</section>
+    <section class="scroll-section pos-center">
+        <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
+            森を活かし、暮らしを「勝」つ。
+        </div>
+    </section>
 
-<footer>
-    &copy; 勝一商店株式会社
-</footer>
+    <footer>
+        &copy; 勝一商店株式会社 All Rights Reserved.
+    </footer>
+</div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    // 初期化
-    AOS.init();
+    // AOSの初期化（ふわっと表示）
+    AOS.init({
+        once: false, // スクロールするたびにアニメーションさせる
+        duration: 1000,
+    });
 
-    // スライドショーの制御
+    // スライドショーの制御（JS）
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
 
     function nextSlide() {
+        // 現在の画像を非表示に
         slides[currentIndex].classList.remove('active');
+        // インデックスを次へ（最後の次は最初に戻る）
         currentIndex = (currentIndex + 1) % slides.length;
+        // 次の画像を表示
         slides[currentIndex].classList.add('active');
     }
 
-    setInterval(nextSlide, 5000); // 5秒ごとに背景切り替え
+    // 5秒ごとに切り替え
+    setInterval(nextSlide, 5000);
 </script>
 
 </body>
 </html>
-</body>
-</html>
-
-

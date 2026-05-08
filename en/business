@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,8 +31,6 @@
             line-height: 1.8;
         }
 
-        body.nav-open { overflow: hidden; }
-
         body::before {
             content: "";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -45,139 +42,71 @@
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
-            z-index: 2000;
-            background: rgba(0,0,0,0.9);
-            height: var(--header-height);
+            z-index: 2000; background: rgba(0,0,0,0.9); height: var(--header-height);
         }
 
-        .logo-image {
-            height: 45px; width: auto; display: block;
-        }
+        .logo-image { height: 45px; width: auto; display: block; }
 
-        /* --- Language Switch --- */
-        .lang-switch {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-left: 35px;
-            font-family: var(--font-eng);
-        }
-        .lang-btn {
-            text-decoration: none;
-            color: #fff;
-            font-size: 0.7rem;
-            opacity: 0.4;
-            transition: 0.3s;
-            letter-spacing: 0.15em;
-        }
+        .lang-switch { display: flex; align-items: center; gap: 12px; margin-left: 35px; font-family: var(--font-eng); }
+        .lang-btn { text-decoration: none; color: #fff; font-size: 0.7rem; opacity: 0.4; transition: 0.3s; letter-spacing: 0.15em; }
         .lang-btn.active { opacity: 1; pointer-events: none; }
         .lang-btn:hover { opacity: 1; color: var(--color-accent); }
         .lang-divider { color: rgba(255,255,255,0.2); font-size: 0.6rem; }
 
-        /* --- Navigation --- */
-        .nav-pc { display: flex; align-items: center; }
         .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
-        .nav-pc ul li a { 
-            text-decoration: none; color: #fff; font-size: 0.75rem; 
-            letter-spacing: 0.15em; transition: 0.5s; opacity: 0.75; 
-        }
+        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; transition: 0.5s; opacity: 0.75; }
         .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
 
-        .menu-trigger {
-            display: none;
-            width: 30px; height: 24px; position: relative; z-index: 3000;
-            background: none; border: none; cursor: pointer;
-        }
-        .menu-trigger span {
-            position: absolute; left: 0; width: 100%; height: 1px;
-            background-color: #fff; transition: all 0.4s;
-        }
-        .menu-trigger span:nth-of-type(1) { top: 0; }
-        .menu-trigger span:nth-of-type(2) { top: 11px; }
-        .menu-trigger span:nth-of-type(3) { bottom: 0; }
+        .menu-trigger { display: none; width: 30px; height: 24px; position: relative; z-index: 3000; background: none; border: none; cursor: pointer; }
+        .menu-trigger span { position: absolute; left: 0; width: 100%; height: 1px; background-color: #fff; transition: all 0.4s; }
+        .menu-trigger span:nth-of-type(1) { top: 0; } .menu-trigger span:nth-of-type(2) { top: 11px; } .menu-trigger span:nth-of-type(3) { bottom: 0; }
         .menu-trigger.active span:nth-of-type(1) { transform: translateY(11px) rotate(-45deg); }
         .menu-trigger.active span:nth-of-type(2) { opacity: 0; }
         .menu-trigger.active span:nth-of-type(3) { transform: translateY(-12px) rotate(45deg); }
 
-        .nav-sp {
-            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-            background: rgba(10, 10, 10, 0.98); z-index: 2500;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: all 0.5s; visibility: hidden;
-        }
+        .nav-sp { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: rgba(10, 10, 10, 0.98); z-index: 2500; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.5s; visibility: hidden; }
         .nav-sp.active { right: 0; visibility: visible; }
         .nav-sp ul { list-style: none; padding: 0; text-align: center; }
         .nav-sp ul li { margin-bottom: 30px; }
         .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; letter-spacing: 0.2em; }
 
-        /* --- Content Page Styling --- */
-        .page-header {
-            padding-top: 180px;
-            padding-bottom: 100px;
-            text-align: center;
-        }
-        .page-title-en {
-            font-family: var(--font-eng);
-            font-size: 3rem;
-            letter-spacing: 0.1em;
-            color: var(--color-accent);
-            display: block;
-            margin-bottom: 10px;
-        }
-        .page-title-jp {
-            font-family: var(--font-serif);
-            font-size: 0.9rem;
-            letter-spacing: 0.5em;
-            opacity: 0.6;
-        }
+        /* --- Business Page Styling --- */
+        .page-header { padding-top: 180px; padding-bottom: 100px; text-align: center; }
+        .page-title-en { font-family: var(--font-eng); font-size: 3.5rem; letter-spacing: 0.1em; color: var(--color-accent); display: block; margin-bottom: 10px; }
+        .page-title-jp { font-family: var(--font-serif); font-size: 0.9rem; letter-spacing: 0.5em; opacity: 0.5; }
 
-        .business-section {
-            max-width: 1000px;
-            margin: 0 auto 150px;
-            padding: 0 40px;
-        }
-        .business-item {
-            display: flex;
-            gap: 60px;
-            margin-bottom: 120px;
-            align-items: center;
-        }
+        .business-section { max-width: 1100px; margin: 0 auto 150px; padding: 0 40px; }
+        .business-item { display: flex; gap: 80px; margin-bottom: 150px; align-items: center; }
         .business-item:nth-child(even) { flex-direction: row-reverse; }
         
-        .business-img { flex: 1; }
-        .business-img img { width: 100%; height: auto; filter: grayscale(30%); }
+        .business-img { flex: 1; position: relative; }
+        .business-img::after { content: ""; position: absolute; top: 15px; left: 15px; width: 100%; height: 100%; border: 1px solid var(--color-accent); z-index: -1; opacity: 0.3; }
+        .business-img img { width: 100%; height: auto; display: block; filter: grayscale(20%); transition: 0.6s; }
+        .business-item:hover .business-img img { filter: grayscale(0%); }
         
         .business-text { flex: 1; }
-        .business-text h3 {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: var(--color-accent);
-        }
-        .business-text p {
-            font-size: 0.9rem;
-            color: #ccc;
-            line-height: 2;
-        }
+        .business-text .item-num { font-family: var(--font-eng); color: var(--color-accent); font-size: 0.75rem; margin-bottom: 15px; display: block; }
+        .business-text h3 { font-family: var(--font-serif); font-size: 2rem; margin-bottom: 30px; color: #fff; font-weight: 400; position: relative; padding-bottom: 20px; }
+        .business-text h3::after { content: ""; position: absolute; bottom: 0; left: 0; width: 40px; height: 1px; background: var(--color-accent); }
+        .business-item:nth-child(even) .business-text h3::after { left: auto; right: 0; }
+        .business-item:nth-child(even) .business-text { text-align: right; }
+        .business-text p { font-size: 0.95rem; color: #ccc; line-height: 2.2; }
 
         footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; background: #000; }
 
         @media (max-width: 768px) {
             header { padding: 0 25px; height: var(--header-height-sp); }
-            .nav-pc { display: none; }
-            .menu-trigger { display: block; }
-            .business-item, .business-item:nth-child(even) { flex-direction: column; gap: 30px; }
-            .page-title-en { font-size: 2.2rem; }
+            .nav-pc { display: none; } .menu-trigger { display: block; }
+            .business-item, .business-item:nth-child(even) { flex-direction: column; gap: 40px; text-align: left !important; }
+            .business-item:nth-child(even) .business-text h3::after { left: 0; right: auto; }
+            .page-title-en { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="index.html">
-        <img src="../看板_540×450mm_1_out_1-01.png" alt="Katsuichi Shoten" class="logo-image">
-    </a>
-    
+    <a href="index.html"><img src="../看板_540×450mm_1_out_1-01.png" alt="Katsuichi Shoten" class="logo-image"></a>
     <nav class="nav-pc">
         <ul>
             <li><a href="index.html">HOME</a></li>
@@ -186,16 +115,9 @@
             <li><a href="about.html">ABOUT</a></li>
             <li><a href="contact.html">CONTACT</a></li>
         </ul>
-        <div class="lang-switch">
-            <a href="../business.html" class="lang-btn">JP</a>
-            <span class="lang-divider">/</span>
-            <span class="lang-btn active">EN</span>
-        </div>
+        <div class="lang-switch"><a href="../business.html" class="lang-btn">JP</a><span class="lang-divider">/</span><span class="lang-btn active">EN</span></div>
     </nav>
-
-    <button class="menu-trigger" id="js-hamburger">
-        <span></span><span></span><span></span>
-    </button>
+    <button class="menu-trigger" id="js-hamburger"><span></span><span></span><span></span></button>
 </header>
 
 <nav class="nav-sp" id="js-nav-sp">
@@ -206,11 +128,7 @@
         <li><a href="about.html">ABOUT</a></li>
         <li><a href="contact.html">CONTACT</a></li>
         <li style="margin-top: 30px;">
-            <div class="lang-switch" style="justify-content: center;">
-                <a href="../business.html" class="lang-btn" style="font-size: 1rem;">JP</a>
-                <span class="lang-divider">/</span>
-                <span class="lang-btn active" style="font-size: 1rem;">EN</span>
-            </div>
+            <div class="lang-switch" style="justify-content: center;"><a href="../business.html" class="lang-btn">JP</a><span class="lang-divider">/</span><span class="lang-btn active">EN</span></div>
         </li>
     </ul>
 </nav>
@@ -223,22 +141,20 @@
 
     <section class="business-section">
         <div class="business-item" data-aos="fade-up">
-            <div class="business-img">
-                <img src="../IMG_0538.jpg" alt="Renovation">
-            </div>
+            <div class="business-img"><img src="../IMG_0538.jpg" alt="Renovation"></div>
             <div class="business-text">
-                <h3>Renovation & Interior</h3>
-                <p>We revitalize old buildings by blending traditional Hokkaido woodcraft with modern design. Our goal is to create spaces that honor the passage of time while providing contemporary comfort.</p>
+                <span class="item-num">01 / RENOVATION</span>
+                <h3>Architectural Renovation</h3>
+                <p>Preserving the soul of old buildings while integrating modern functionality. We specialize in revitalizing structures using Hokkaido's finest timber, turning the passage of time into architectural beauty.</p>
             </div>
         </div>
 
         <div class="business-item" data-aos="fade-up">
-            <div class="business-img">
-                <img src="../IMG_5250.JPG" alt="Wood Craft">
-            </div>
+            <div class="business-img"><img src="../IMG_5250.JPG" alt="Wood Craft"></div>
             <div class="business-text">
-                <h3>Woodwork & Furniture</h3>
-                <p>Utilizing high-quality timber from local forests, we craft custom furniture and architectural elements. Every piece is designed to highlight the unique narrative found within the wood's grain.</p>
+                <span class="item-num">02 / WOODWORK</span>
+                <h3>Furniture & Interior</h3>
+                <p>Creating custom furniture and interior elements that breathe life into your space. Every piece is handcrafted to highlight the unique narrative found within the grain of the wood.</p>
             </div>
         </div>
     </section>
@@ -249,13 +165,8 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init({ duration: 1200, once: true });
-
-    const hamburger = document.getElementById('js-hamburger');
-    const navSp = document.getElementById('js-nav-sp');
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navSp.classList.toggle('active');
-    });
+    const hb=document.getElementById('js-hamburger'), nv=document.getElementById('js-nav-sp');
+    hb.onclick=()=>{ hb.classList.toggle('active'); nv.classList.toggle('active'); };
 </script>
 </body>
 </html>

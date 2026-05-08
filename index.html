@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
@@ -20,7 +20,6 @@
             --font-eng: 'Playfair Display', serif;
         }
 
-        /* 1. 全体設定とテクスチャ（ノイズ） */
         body {
             margin: 0; padding: 0;
             background-color: var(--color-bg);
@@ -30,34 +29,36 @@
             line-height: 1.8;
         }
 
-        /* 画面全体に微細なノイズを重ねる */
+        /* 画面全体の粒子テクスチャ */
         body::before {
             content: "";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.15; pointer-events: none; z-index: 9999;
+            opacity: 0.12; pointer-events: none; z-index: 9999;
         }
 
-        /* 2. ヘッダー：極限までミニマルに */
+        /* ヘッダー：社名をフルネームに */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 30px 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
+            padding: 35px 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
             z-index: 1000; mix-blend-mode: difference;
         }
 
         .logo-text { 
-            font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; 
-            letter-spacing: 0.3em; color: #fff; text-decoration: none; 
+            font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500; 
+            letter-spacing: 0.25em; color: #fff; text-decoration: none; 
         }
 
-        nav ul { list-style: none; display: flex; gap: 40px; margin: 0; padding: 0; }
+        /* メニュー：日本語に回帰 */
+        nav ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
         nav ul li a { 
-            text-decoration: none; color: #fff; font-size: 0.7rem; 
-            letter-spacing: 0.2em; transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1); opacity: 0.6; 
+            text-decoration: none; color: #fff; font-size: 0.75rem; 
+            letter-spacing: 0.15em; transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1); opacity: 0.7; 
+            font-weight: 300;
         }
-        nav ul li a:hover { opacity: 1; color: var(--color-accent); letter-spacing: 0.3em; }
+        nav ul li a:hover { opacity: 1; color: var(--color-accent); }
 
-        /* 3. メインスライド：シネマティック演出 */
+        /* メインスライド */
         .hero-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -2;
         }
@@ -65,104 +66,123 @@
         .slide {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            opacity: 0; transform: scale(1.1);
-            transition: opacity 2s ease-in-out, transform 8s linear;
+            opacity: 0; transform: scale(1.15);
+            transition: opacity 2.5s ease-in-out, transform 10s ease-out;
         }
 
-        .slide.active { opacity: 0.5; transform: scale(1.0); }
+        .slide.active { opacity: 0.45; transform: scale(1.0); }
 
-        /* スライド上の装飾 */
         .hero-overlay {
-            position: absolute; bottom: 60px; left: 60px;
-            font-family: var(--font-eng); font-style: italic; font-size: 1rem;
-            color: var(--color-accent); opacity: 0.8;
+            position: absolute; bottom: 50px; left: 60px;
+            font-family: var(--font-eng); font-style: italic; font-size: 0.9rem;
+            color: var(--color-accent); opacity: 0.6; letter-spacing: 0.1em;
         }
 
-        /* 4. コンテンツ：奥行きのあるスクロール体験 */
         .content-wrapper { position: relative; z-index: 10; }
 
         .section-vertical {
-            height: 120vh; display: flex; align-items: center; padding: 0 10%; box-sizing: border-box;
+            height: 110vh; display: flex; align-items: center; padding: 0 12%; box-sizing: border-box;
         }
 
-        /* 縦書きコピー */
         .copy-vertical {
             writing-mode: vertical-rl;
             font-family: var(--font-serif);
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 200;
-            letter-spacing: 0.6em;
+            letter-spacing: 0.5em;
             color: #fff;
             margin-left: auto;
+            line-height: 2.2;
             position: relative;
         }
 
         .copy-vertical::before {
-            content: ""; position: absolute; top: -100px; right: 50%; width: 1px; height: 80px; background: var(--color-accent);
+            content: ""; position: absolute; top: -120px; right: 50%; width: 1px; height: 100px; 
+            background: linear-gradient(to bottom, transparent, var(--color-accent));
         }
 
-        /* 5. 紹介セクション：重なりと余白 */
+        /* はじめましてセクション */
         .intro-section {
-            padding: 200px 0; background: transparent;
+            padding: 180px 0; background: transparent;
         }
 
         .intro-container {
-            max-width: 1400px; margin: 0 auto; display: flex; gap: 100px; padding: 0 80px;
+            max-width: 1400px; margin: 0 auto; display: flex; gap: 80px; padding: 0 80px; align-items: flex-start;
         }
 
-        .intro-text { flex: 1; padding-top: 100px; }
+        .intro-text { flex: 1; padding-top: 60px; }
         .intro-text h2 {
-            font-family: var(--font-serif); font-size: 2.2rem; font-weight: 200;
-            margin-bottom: 80px; line-height: 1.6;
+            font-family: var(--font-serif); font-size: 2rem; font-weight: 400;
+            margin-bottom: 70px; line-height: 1.8; letter-spacing: 0.15em;
         }
 
         .intro-text p {
-            font-size: 0.95rem; line-height: 2.8; color: #bbb; font-weight: 300; margin-bottom: 3rem;
+            font-size: 0.9rem; line-height: 2.6; color: #ccc; font-weight: 300; margin-bottom: 2.5rem;
+            text-align: justify;
         }
 
-        .intro-image-wrap { flex: 1.2; position: relative; }
+        .intro-image-wrap { flex: 1.1; position: relative; }
         .intro-image-wrap img {
-            width: 100%; height: auto; border-radius: 0; box-shadow: 40px 40px 0px rgba(191, 160, 113, 0.05);
+            width: 100%; height: auto; border-radius: 0; 
+            box-shadow: 30px 30px 60px rgba(0, 0, 0, 0.5);
         }
         
-        /* 6. 会社情報：情報の結晶化 */
+        /* 会社情報セクション：日本語・英語併記対応 */
         .info-section {
-            background: #000; padding: 150px 80px;
+            background: #000; padding: 150px 80px; border-top: 1px solid #1a1a1a;
         }
 
         .info-grid {
-            display: grid; grid-template-columns: 350px 1fr; border-top: 1px solid #333; padding-top: 60px;
+            max-width: 1300px; margin: 0 auto;
+            display: grid; grid-template-columns: 320px 1fr; gap: 40px;
         }
 
-        .info-title { font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 0.4em; }
+        .info-title { 
+            font-family: var(--font-serif); font-size: 1.3rem; letter-spacing: 0.3em; 
+            color: var(--color-accent);
+        }
 
         .office-list { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-        .office-item h3 { font-size: 0.7rem; color: var(--color-accent); letter-spacing: 0.2em; margin-bottom: 20px; }
-        .office-item p { font-size: 0.85rem; color: #999; margin: 0; }
+        
+        .office-item { margin-bottom: 40px; }
+        .office-item h3 { 
+            font-size: 0.8rem; color: #fff; letter-spacing: 0.1em; margin-bottom: 15px; 
+            font-family: var(--font-serif); border-bottom: 1px solid #222; padding-bottom: 10px;
+        }
+        .office-item .sub-name { font-size: 0.85rem; color: #eee; margin-bottom: 10px; font-weight: 500; }
+        .office-item .address-jp { font-size: 0.8rem; color: #aaa; margin: 0; line-height: 1.8; }
+        .office-item .address-en { 
+            font-size: 0.7rem; color: #666; margin: 5px 0 0 0; line-height: 1.6; 
+            font-family: var(--font-eng); font-style: italic;
+        }
 
-        footer { padding: 80px; text-align: center; font-size: 0.6rem; color: #444; letter-spacing: 0.2em; }
+        footer { padding: 60px; text-align: center; font-size: 0.6rem; color: #333; letter-spacing: 0.3em; border-top: 1px solid #0a0a0a; }
+
+        @media (max-width: 1024px) {
+            .office-list { grid-template-columns: 1fr; gap: 60px; }
+        }
 
         @media (max-width: 768px) {
-            header { padding: 20px; }
-            .nav-pc { display: none; }
+            header { padding: 25px 30px; flex-direction: column; gap: 15px; }
+            .nav-pc { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            nav ul { gap: 20px; white-space: nowrap; padding-bottom: 5px; }
             .intro-container { flex-direction: column; padding: 0 40px; }
-            .copy-vertical { font-size: 1.4rem; }
-            .info-grid { grid-template-columns: 1fr; gap: 40px; }
-            .office-list { grid-template-columns: 1fr; gap: 40px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .section-vertical { padding: 0 15%; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="index.html" class="logo-text">勝一商店</a>
+    <a href="index.html" class="logo-text">勝一商店株式会社</a>
     <nav class="nav-pc">
         <ul>
             <li><a href="index.html">HOME</a></li>
-            <li><a href="business.html">BUSINESS</a></li>
-            <li><a href="works.html">WORKS</a></li>
-            <li><a href="会社案内.html">COMPANY</a></li>
-            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="business.html">事業内容</a></li>
+            <li><a href="works.html">施工事例</a></li>
+            <li><a href="会社案内.html">会社案内</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
         </ul>
     </nav>
 </header>
@@ -177,23 +197,23 @@
 
 <div class="content-wrapper">
     <section class="section-vertical">
-        <div class="copy-vertical" data-aos="fade-down" data-aos-duration="2000">
+        <div class="copy-vertical" data-aos="fade-down" data-aos-duration="2500">
             物語の続きを、<br>あなたと描く。
         </div>
     </section>
 
     <section class="section-vertical" style="justify-content: flex-start;">
-        <div class="copy-vertical" style="margin-left: 0;" data-aos="fade-down" data-aos-duration="2000" data-aos-delay="400">
+        <div class="copy-vertical" style="margin-left: 0;" data-aos="fade-down" data-aos-duration="2500" data-aos-delay="500">
             時をリノベートする。<br>人生をデザインする。
         </div>
     </section>
 
     <section class="intro-section">
         <div class="intro-container">
-            <div class="intro-image-wrap" data-aos="fade-right" data-aos-duration="1500">
-                <img src="IMG_9093.JPG" alt="Heritage Wood">
+            <div class="intro-image-wrap" data-aos="fade-right" data-aos-duration="1800">
+                <img src="IMG_9093.JPG" alt="Heritage Wood Detail">
             </div>
-            <div class="intro-text" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
+            <div class="intro-text" data-aos="fade-up" data-aos-duration="1800" data-aos-delay="300">
                 <h2>はじめまして、<br>勝一商店です。</h2>
                 <p>
                     たとえば、古い梁に刻まれた傷跡に。<br>
@@ -207,7 +227,7 @@
                     新しいあなたの物語を重ねていくということ。
                 </p>
                 <p>
-                    <span style="color: #fff;">「この暮らしで、よかった」</span><br>
+                    <span style="color: #fff; font-weight: 500;">「この暮らしで、よかった」</span><br>
                     自分らしく生きることを、一途に選ぶ人のために。<br>
                     森を活かし、暮らしを「勝」つ。
                 </p>
@@ -217,35 +237,37 @@
 
     <section class="info-section">
         <div class="info-grid" data-aos="fade-up">
-            <div class="info-title">勝一商店株式会社</div>
+            <div class="info-title">ACCESS</div>
             <div class="office-list">
                 <div class="office-item">
-                    <h3>MAIN OFFICE</h3>
-                    <p>〒070-0825 北海道旭川市北門町13丁目2941-9</p>
+                    <h3>MIDCITY Office</h3>
+                    <div class="sub-name">勝一商店株式会社</div>
+                    <p class="address-jp">〒070-0825 北海道旭川市北門町１３丁目２９４１−９</p>
+                    <p class="address-en">13-2941-9 Hokumon-cho Asahikawa-shi Hokkaido 070-0825 Japan</p>
                 </div>
                 <div class="office-item">
-                    <h3>SATELLITE</h3>
-                    <p>〒071-1423 北海道上川郡東川町東町1丁目7-17 C棟</p>
+                    <h3>東川町サテライトオフィス</h3>
+                    <div class="sub-name">KAGUの家　ULTRA BUSSANTEN</div>
+                    <p class="address-jp">〒071-1423 北海道上川郡東川町東町1丁目7番17号(C棟)</p>
+                    <p class="address-en">1-7-17-C Higashikawa-cho Kamikawa-gun Hokkaido 071-1423 Japan</p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        &copy; SHOICHI SHOTEN CO., LTD.
+        &copy; SHOICHI SHOTEN CO., LTD. ALL RIGHTS RESERVED.
     </footer>
 </div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    // AOS初期化（一回限りのアニメーションではなく、スクロールに合わせて何度も動く設定）
     AOS.init({
-        duration: 1200,
+        duration: 1500,
         once: false,
         offset: 100
     });
 
-    // 高度なスライドショー制御：ズームとフェードの同期
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
 
@@ -255,8 +277,8 @@
         slides[currentIndex].classList.add('active');
     }
 
-    // 5秒ごとに切り替え
-    setInterval(nextSlide, 5000);
+    // 6秒ごとにスライド。ズーム効果を楽しめるよう少し長めに設定。
+    setInterval(nextSlide, 6000);
 </script>
 
 </body>

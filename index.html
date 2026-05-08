@@ -68,54 +68,44 @@
         }
         .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
 
-        /* --- ★ハンバーガーボタン（バツ印アニメーション実装） --- */
+        /* --- ハンバーガーボタン --- */
         .menu-trigger {
-            display: none; /* 初期状態非表示 */
+            display: none;
             width: 30px; height: 24px; position: relative; z-index: 3000;
             background: none; border: none; cursor: pointer; padding: 0;
         }
         
-        /* 3本線の共通スタイル */
         .menu-trigger span {
             position: absolute; left: 0; width: 100%; height: 1px;
-            background-color: #fff; /* 線の色 */
-            transition: all 0.4s ease-in-out; /* ★アニメーションの速さ */
+            background-color: #fff;
+            transition: all 0.4s ease-in-out;
         }
         
-        /* 1本目（上） */
         .menu-trigger span:nth-of-type(1) { top: 0; }
-        /* 2本目（真ん中） */
         .menu-trigger span:nth-of-type(2) { top: 11px; }
-        /* 3本目（下） */
         .menu-trigger span:nth-of-type(3) { bottom: 0; }
 
-        /* ★アクティブ時（メニュー開いた時）のバツ印スタイル */
-        
-        /* 1本目を回転させてバツの一部に */
         .menu-trigger.active span:nth-of-type(1) {
             transform: translateY(11px) rotate(-45deg);
         }
         
-        /* 2本目を透明にして消す */
         .menu-trigger.active span:nth-of-type(2) {
             opacity: 0;
         }
         
-        /* 3本目を回転させてバツの一部に */
         .menu-trigger.active span:nth-of-type(3) {
             transform: translateY(-12px) rotate(45deg);
         }
 
-        /* --- スマホメニュー（オーバーレイ） --- */
+        /* --- スマホメニュー --- */
         .nav-sp {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
             background: rgba(10, 10, 10, 0.98); z-index: 2500;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            visibility: hidden; /* ★閉じている時は非表示 */
+            visibility: hidden;
         }
         
-        /* メニュー開いた時 */
         .nav-sp.active {
             right: 0;
             visibility: visible;
@@ -123,7 +113,6 @@
         
         .nav-sp ul { list-style: none; padding: 0; text-align: center; }
         
-        /* リストアイテムのアニメーション（時間差で浮かび上がる） */
         .nav-sp ul li {
             margin-bottom: 35px; opacity: 0; transform: translateY(20px);
             transition: opacity 0.4s, transform 0.4s;
@@ -132,7 +121,6 @@
             opacity: 1; transform: translateY(0);
         }
         
-        /* 時間差の設定 */
         .nav-sp.active ul li:nth-child(1) { transition-delay: 0.2s; }
         .nav-sp.active ul li:nth-child(2) { transition-delay: 0.3s; }
         .nav-sp.active ul li:nth-child(3) { transition-delay: 0.4s; }
@@ -155,7 +143,6 @@
 
         .content-wrapper { position: relative; z-index: 10; }
         
-        /* キャッチコピー */
         .section-copy { height: 100vh; display: flex; align-items: center; box-sizing: border-box; position: relative; z-index: 5; }
         .copy-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.7rem; font-weight: 200; letter-spacing: 0.5em; color: #fff; line-height: 2.2; position: relative; }
         .copy-vertical::before { content: ""; position: absolute; top: -120px; right: 50%; width: 1px; height: 100px; background: linear-gradient(to bottom, transparent, var(--color-accent)); }
@@ -176,7 +163,6 @@
         .intro-text .section-num { font-family: var(--font-eng); color: var(--color-accent); font-size: 0.8rem; margin-bottom: 20px; display: block; letter-spacing: 0.2em; }
         .intro-text h2 { font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 50px; line-height: 1.6; color: #fff; font-weight: 400; }
         .intro-text p { font-size: 0.95rem; line-height: 2.4; color: #bbb; margin-bottom: 2rem; text-align: justify; }
-        .intro-text p b { color: #fff; font-weight: 500; font-size: 1.1rem; }
 
         .info-section { background: #000; padding: 150px 80px; border-top: 1px solid #1a1a1a; position: relative; z-index: 10; }
         .info-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
@@ -184,31 +170,20 @@
         .office-list { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
         .office-item { margin-bottom: 40px; }
         .office-item h3 { font-size: 0.8rem; color: #fff; font-family: var(--font-serif); border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 15px; }
-        .office-item .sub-name { font-size: 0.85rem; color: #eee; margin-bottom: 10px; font-weight: 500; }
-        .office-item .address-jp { font-size: 0.8rem; color: #aaa; line-height: 1.8; margin: 0; }
-        .office-item .address-en { font-size: 0.7rem; color: #666; font-family: var(--font-eng); font-style: italic; margin-top: 5px; }
 
         footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; font-family: var(--font-serif); background: #000; }
 
-        /* --- レスポンシブ（スマホ） --- */
         @media (max-width: 768px) {
             header { padding: 0 30px; height: var(--header-height-sp); background: rgba(0,0,0,0.85); }
             .logo-image { height: 38px; }
-            
-            /* ★PCナビを消してハンバーガーを表示 */
             .nav-pc { display: none; }
             .menu-trigger { display: block; }
-
             .intro-container { flex-direction: column; gap: 50px; padding: 0 30px; }
             .intro-image-wrap::after { display: none; }
             .intro-text h2 { font-size: 1.8rem; }
-
             .copy-vertical { font-size: 1.4rem; }
             .copy-horizontal { font-size: 1.3rem; line-height: 1.8; }
-            
-            /* スマホ専用改行 */
             .copy-horizontal span { display: block; }
-            
             .info-grid { grid-template-columns: 1fr; }
             .office-list { grid-template-columns: 1fr; gap: 40px; }
             .info-section { padding: 100px 40px; }
@@ -227,8 +202,7 @@
             <li><a href="index.html">HOME</a></li>
             <li><a href="business.html">事業内容</a></li>
             <li><a href="works.html">施工事例</a></li>
-            <li><a href="about.html">会社案内</a></li>
-            <li><a href="contact.html">お問い合わせ</a></li>
+            <li><a href="about.html">会社案内</a></li> <li><a href="contact.html">お問い合わせ</a></li>
         </ul>
     </nav>
 
@@ -244,8 +218,7 @@
         <li><a href="index.html">HOME</a></li>
         <li><a href="business.html">事業内容</a></li>
         <li><a href="works.html">施工事例</a></li>
-        <li><a href="about.html">会社案内</a></li>
-        <li><a href="contact.html">お問い合わせ</a></li>
+        <li><a href="about.html">会社案内</a></li> <li><a href="contact.html">お問い合わせ</a></li>
     </ul>
 </nav>
 
@@ -320,24 +293,18 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    // AOS初期化
     AOS.init({ duration: 1500, once: false, offset: 100 });
 
-    // ★ハンバーガーメニューの開閉制御
     const hamburger = document.getElementById('js-hamburger');
     const navSp = document.getElementById('js-nav-sp');
     const body = document.body;
 
     hamburger.addEventListener('click', () => {
-        // ボタンにactiveクラスを付与/削除（CSSでバツ印アニメーション）
         hamburger.classList.toggle('active');
-        // メニューにactiveクラスを付与/削除（メニュー表示/非表示）
         navSp.classList.toggle('active');
-        // bodyにnav-openクラスを付与/削除（メニュー開いている時はスクロール禁止）
         body.classList.toggle('nav-open');
     });
 
-    // メニュー内のリンクをクリックしたら自動的に閉じる
     const navLinks = navSp.querySelectorAll('a');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -347,7 +314,6 @@
         });
     });
 
-    // 背景スライドショー
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
     function nextSlide() {
@@ -357,9 +323,7 @@
     }
     setInterval(nextSlide, 6000);
 
-    // スクロール時の文字フェードアウト
     window.addEventListener('scroll', function() {
-        // メニュー開いている時は処理しない
         if (body.classList.contains('nav-open')) return;
         
         const copies = document.querySelectorAll('.copy-vertical, .copy-horizontal');
@@ -376,6 +340,5 @@
         });
     });
 </script>
-
 </body>
 </html>

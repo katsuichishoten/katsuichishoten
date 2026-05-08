@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,105 +13,60 @@
     
     <style>
         :root {
-            --color-bg: #0a0a0a;
-            --color-text: #ffffff;
-            --color-accent: #bfa071;
-            --font-serif: 'Noto Serif JP', serif;
-            --font-eng: 'Playfair Display', serif;
-            --header-height: 90px;
-            --header-height-sp: 70px;
+            --color-bg: #0a0a0a; --color-text: #ffffff; --color-accent: #bfa071;
+            --font-serif: 'Noto Serif JP', serif; --font-eng: 'Playfair Display', serif;
         }
 
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            font-family: 'Noto Sans JP', sans-serif;
-            overflow-x: hidden;
-            line-height: 1.8;
-        }
+        body { margin: 0; padding: 0; background-color: var(--color-bg); color: var(--color-text); font-family: 'Noto Sans JP', sans-serif; line-height: 1.8; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com/patterns/stardust.pattern'); opacity: 0.12; pointer-events: none; z-index: 9999; }
 
-        body::before {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.pattern');
-            opacity: 0.12; pointer-events: none; z-index: 9999;
-        }
-
-        /* --- Header --- */
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
-            z-index: 2000; background: rgba(0,0,0,0.9); height: var(--header-height);
-        }
-
-        .logo-image { height: 45px; width: auto; display: block; }
-
-        .lang-switch { display: flex; align-items: center; gap: 12px; margin-left: 35px; font-family: var(--font-eng); }
-        .lang-btn { text-decoration: none; color: #fff; font-size: 0.7rem; opacity: 0.4; transition: 0.3s; letter-spacing: 0.15em; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 0 60px; position: fixed; top: 0; width: 100%; z-index: 2000; background: rgba(0,0,0,0.9); height: 90px; }
+        .logo-image { height: 45px; width: auto; }
+        .lang-switch { display: flex; align-items: center; gap: 12px; font-family: var(--font-eng); }
+        .lang-btn { text-decoration: none; color: #fff; font-size: 0.7rem; opacity: 0.4; letter-spacing: 0.15em; }
         .lang-btn.active { opacity: 1; pointer-events: none; }
-        .lang-btn:hover { opacity: 1; color: var(--color-accent); }
-        .lang-divider { color: rgba(255,255,255,0.2); font-size: 0.6rem; }
 
-        .nav-pc { display: flex; align-items: center; }
-        .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
-        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; transition: 0.5s; opacity: 0.75; }
-        .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
+        .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; }
+        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; opacity: 0.75; }
 
         .menu-trigger { display: none; width: 30px; height: 24px; position: relative; z-index: 3000; background: none; border: none; cursor: pointer; }
         .menu-trigger span { position: absolute; left: 0; width: 100%; height: 1px; background-color: #fff; transition: all 0.4s; }
-        .menu-trigger span:nth-of-type(1) { top: 0; }
-        .menu-trigger span:nth-of-type(2) { top: 11px; }
-        .menu-trigger span:nth-of-type(3) { bottom: 0; }
         .menu-trigger.active span:nth-of-type(1) { transform: translateY(11px) rotate(-45deg); }
         .menu-trigger.active span:nth-of-type(2) { opacity: 0; }
         .menu-trigger.active span:nth-of-type(3) { transform: translateY(-12px) rotate(45deg); }
 
-        .nav-sp {
-            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-            background: rgba(10, 10, 10, 0.98); z-index: 2500;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: all 0.5s; visibility: hidden;
-        }
+        .nav-sp { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: rgba(10, 10, 10, 0.98); z-index: 2500; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.5s; visibility: hidden; }
         .nav-sp.active { right: 0; visibility: visible; }
-        .nav-sp ul { list-style: none; padding: 0; text-align: center; }
-        .nav-sp ul li { margin-bottom: 30px; }
-        .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; letter-spacing: 0.2em; }
 
         /* --- About Page Styling --- */
         .page-header { padding-top: 180px; padding-bottom: 80px; text-align: center; }
-        .page-title-en { font-family: var(--font-eng); font-size: 3rem; letter-spacing: 0.1em; color: var(--color-accent); display: block; margin-bottom: 10px; }
-        .page-title-jp { font-family: var(--font-serif); font-size: 0.9rem; letter-spacing: 0.5em; opacity: 0.6; }
+        .page-title-en { font-family: var(--font-eng); font-size: 3.5rem; letter-spacing: 0.1em; color: var(--color-accent); display: block; }
+        .page-title-jp { font-family: var(--font-serif); font-size: 0.9rem; letter-spacing: 0.5em; opacity: 0.5; }
 
         .about-container { max-width: 900px; margin: 0 auto 150px; padding: 0 40px; }
-        
-        .mission-block { margin-bottom: 100px; text-align: center; }
-        .mission-block h2 { font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 30px; color: #fff; font-weight: 400; }
-        .mission-block p { font-size: 0.95rem; color: #ccc; line-height: 2.2; }
+        .mission-block { margin-bottom: 120px; text-align: center; }
+        .mission-block h2 { font-family: var(--font-serif); font-size: 2.2rem; color: #fff; font-weight: 300; margin-bottom: 40px; }
+        .mission-block p { font-size: 1rem; color: #ccc; line-height: 2.4; text-align: justify; }
 
-        .profile-table { width: 100%; border-collapse: collapse; border-top: 1px solid #333; margin-top: 50px; }
-        .profile-table th, .profile-table td { padding: 25px 0; border-bottom: 1px solid #222; text-align: left; vertical-align: top; }
-        .profile-table th { width: 30%; font-family: var(--font-serif); font-size: 0.85rem; color: var(--color-accent); font-weight: 400; letter-spacing: 0.1em; }
-        .profile-table td { font-size: 0.9rem; color: #eee; }
+        .profile-table { width: 100%; border-collapse: collapse; border-top: 1px solid #333; margin-top: 60px; }
+        .profile-table th, .profile-table td { padding: 30px 0; border-bottom: 1px solid #222; vertical-align: top; text-align: left; }
+        .profile-table th { width: 30%; font-family: var(--font-serif); font-size: 0.9rem; color: var(--color-accent); letter-spacing: 0.1em; font-weight: 400; }
+        .profile-table td { font-size: 0.95rem; color: #eee; }
 
-        footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; background: #000; }
+        footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; background: #000; }
 
         @media (max-width: 768px) {
-            header { padding: 0 25px; height: var(--header-height-sp); }
-            .nav-pc { display: none; }
-            .menu-trigger { display: block; }
-            .profile-table th { width: 40%; }
-            .page-title-en { font-size: 2.2rem; }
+            header { padding: 0 25px; height: 70px; }
+            .nav-pc { display: none; } .menu-trigger { display: block; }
+            .profile-table th { width: 40%; font-size: 0.8rem; }
+            .page-title-en { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="index.html">
-        <img src="../看板_540×450mm_1_out_1-01.png" alt="Katsuichi Shoten" class="logo-image">
-    </a>
-    
+    <a href="index.html"><img src="../看板_540×450mm_1_out_1-01.png" alt="Logo" class="logo-image"></a>
     <nav class="nav-pc">
         <ul>
             <li><a href="index.html">HOME</a></li>
@@ -121,16 +75,9 @@
             <li><a href="about.html">ABOUT</a></li>
             <li><a href="contact.html">CONTACT</a></li>
         </ul>
-        <div class="lang-switch">
-            <a href="../about.html" class="lang-btn">JP</a>
-            <span class="lang-divider">/</span>
-            <span class="lang-btn active">EN</span>
-        </div>
+        <div class="lang-switch"><a href="../about.html" class="lang-btn">JP</a><span class="lang-divider">/</span><span class="lang-btn active">EN</span></div>
     </nav>
-
-    <button class="menu-trigger" id="js-hamburger">
-        <span></span><span></span><span></span>
-    </button>
+    <button class="menu-trigger" id="js-hamburger"><span></span><span></span><span></span></button>
 </header>
 
 <nav class="nav-sp" id="js-nav-sp">
@@ -140,13 +87,7 @@
         <li><a href="works.html">WORKS</a></li>
         <li><a href="about.html">ABOUT</a></li>
         <li><a href="contact.html">CONTACT</a></li>
-        <li style="margin-top: 30px;">
-            <div class="lang-switch" style="justify-content: center;">
-                <a href="../about.html" class="lang-btn" style="font-size: 1rem;">JP</a>
-                <span class="lang-divider">/</span>
-                <span class="lang-btn active" style="font-size: 1rem;">EN</span>
-            </div>
-        </li>
+        <li style="margin-top: 30px;"><div class="lang-switch" style="justify-content: center;"><a href="../about.html" class="lang-btn">JP</a><span class="lang-divider">/</span><span class="lang-btn active">EN</span></div></li>
     </ul>
 </nav>
 
@@ -159,37 +100,14 @@
     <div class="about-container">
         <section class="mission-block" data-aos="fade-up">
             <h2>Our Mission</h2>
-            <p>At Katsuichi Shoten, we believe that buildings are more than just structures; they are vessels for memories. Our mission is to renovate the passage of time, preserving the wisdom of the past while crafting a sustainable future through the artistry of Hokkaido's timber.</p>
+            <p>Buildings are more than just physical structures; they are repositories of memory and time. Our mission is to honor the history embedded in Hokkaido's timber by blending traditional wisdom with modern design. We believe in transforming "discarded" wood into a sustainable legacy, allowing you to master your lifestyle while preserving the forest for generations to come.</p>
         </section>
 
         <table class="profile-table" data-aos="fade-up">
-            <tr>
-                <th>Company Name</th>
-                <td>Katsuichi Shoten Co., Ltd.</td>
-            </tr>
-            <tr>
-                <th>Head Office</th>
-                <td>13-2941-9 Hokumon-cho, Asahikawa-shi, Hokkaido 070-0825 Japan</td>
-            </tr>
-            <tr>
-                <th>Establishment</th>
-                <td>(Please enter year)</td>
-            </tr>
-            <tr>
-                <th>Director</th>
-                <td>(Please enter name)</td>
-            </tr>
-            <tr>
-                <th>Business Scope</th>
-                <td>Architectural Renovation / Interior Design / Custom Furniture Production / Woodworking</td>
-            </tr>
-            <tr>
-                <th>Offices</th>
-                <td>
-                    MIDCITY Office (Asahikawa)<br>
-                    Higashikawa Satellite Office (Higashikawa)
-                </td>
-            </tr>
+            <tr><th>Company Name</th><td>Katsuichi Shoten Co., Ltd.</td></tr>
+            <tr><th>Head Office</th><td>13-2941-9 Hokumon-cho, Asahikawa-shi, Hokkaido 070-0825 Japan</td></tr>
+            <tr><th>Business Scope</th><td>Architectural Renovation / Interior Design / Custom Furniture Production / Woodworking</td></tr>
+            <tr><th>Main Offices</th><td>MIDCITY Office (Asahikawa)<br>Higashikawa Satellite Office (Higashikawa)</td></tr>
         </table>
     </div>
 </main>
@@ -199,13 +117,8 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init({ duration: 1200, once: true });
-
-    const hamburger = document.getElementById('js-hamburger');
-    const navSp = document.getElementById('js-nav-sp');
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navSp.classList.toggle('active');
-    });
+    const hb=document.getElementById('js-hamburger'), nv=document.getElementById('js-nav-sp');
+    hb.onclick=()=>{ hb.classList.toggle('active'); nv.classList.toggle('active'); };
 </script>
 </body>
 </html>

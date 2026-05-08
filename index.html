@@ -24,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* ヘッダー */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
@@ -38,11 +37,11 @@
         nav ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.1em; transition: 0.3s; opacity: 0.8; }
         nav ul li a:hover { opacity: 1; color: var(--accent-color); }
 
-        /* 背景固定スライドショー */
         .hero-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
             z-index: -2; overflow: hidden;
+            background-color: #111;
         }
 
         .slide {
@@ -58,7 +57,6 @@
             background: rgba(0, 0, 0, 0.4); z-index: -1;
         }
 
-        /* コンテンツレイアウト */
         .content-wrapper { position: relative; z-index: 1; width: 100%; }
 
         .scroll-section {
@@ -84,7 +82,6 @@
             white-space: nowrap;
         }
 
-        /* メッセージセクション */
         .intro-section {
             background-color: #000;
             padding: 150px 0;
@@ -132,7 +129,6 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
-        /* 会社情報セクション */
         .company-info-section {
             background-color: #000;
             padding: 100px 50px;
@@ -189,16 +185,12 @@
             header { padding: 15px 20px; flex-direction: column; }
             .logo-text { font-size: 0.9rem; margin-bottom: 5px; }
             nav ul li { margin-left: 12px; }
-            
             .scroll-section { padding: 0 5%; }
             .copy-text { font-size: 0.85rem; letter-spacing: 0.2em; }
-
             .intro-container { flex-direction: column; padding: 0 30px; gap: 50px; }
             .intro-text h2 { font-size: 1.4rem; margin-bottom: 30px; }
-            
             .intro-image { width: 100%; text-align: right; position: static; }
             .intro-image img { width: 90%; height: 450px; }
-
             .office-grid { grid-template-columns: 1fr; gap: 40px; }
             .company-info-section { padding: 80px 30px; }
         }
@@ -220,10 +212,10 @@
 </header>
 
 <div class="hero-container">
-    <div class="slide active" style="background-image: url('IMG_8604.jpg');"></div>
-    <div class="slide" style="background-image: url('IMG_8605.jpg');"></div>
-    <div class="slide" style="background-image: url('IMG_8607.jpg');"></div>
-    <div class="slide" style="background-image: url('IMG_8608.jpg');"></div>
+    <div class="slide active" style="background-image: url('DSCF0613.JPEG');"></div>
+    <div class="slide" style="background-image: url('IMG_0538.jpg');"></div>
+    <div class="slide" style="background-image: url('IMG_5250.JPG');"></div>
+    <div class="slide" style="background-image: url('IMG_7222.jpg');"></div>
 </div>
 
 <div class="content-wrapper">
@@ -282,7 +274,7 @@
                 </p>
             </div>
             <div class="intro-image" data-aos="fade-left" data-aos-duration="1200">
-                <img src="DSCF0613.JPEG" alt="勝一商店のフィロソフィー">
+                <img src="IMG_9093.JPG" alt="勝一商店のフィロソフィー">
             </div>
         </div>
     </section>
@@ -290,14 +282,12 @@
     <section class="company-info-section">
         <div class="company-info-container" data-aos="fade-up">
             <div class="company-name">勝一商店株式会社</div>
-            
             <div class="office-grid">
                 <div class="office-item">
                     <h3>MIDCITY Office（本社）</h3>
                     <p>〒070-0825 北海道旭川市北門町１３丁目２９４1−９</p>
                     <p class="address-en">13-2941-9 Hokumon-cho Asahikawa-shi Hokkaido 070-0825 Japan</p>
                 </div>
-
                 <div class="office-item">
                     <h3>東川町サテライトオフィス＜KAGUの家＞ULTRA BUSSANTEN</h3>
                     <p>〒071-1423 北海道上川郡東川町東町1丁目7番17号(C棟)</p>
@@ -316,16 +306,16 @@
 <script>
     AOS.init({ once: false });
 
-    // スライドショー制御
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
-    function nextSlide() {
-        slides[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % slides.length;
-        slides[currentIndex].classList.add('active');
+    if(slides.length > 0) {
+        function nextSlide() {
+            slides[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % slides.length;
+            slides[currentIndex].classList.add('active');
+        }
+        setInterval(nextSlide, 3000);
     }
-    // 3秒ごとに切り替え
-    setInterval(nextSlide, 3000);
 </script>
 
 </body>

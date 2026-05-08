@@ -19,67 +19,79 @@
 
         body {
             margin: 0; background-color: var(--bg-color); color: var(--text-color);
-            font-family: 'Noto Sans JP', sans-serif; line-height: 1.8; overflow-x: hidden;
+            font-family: 'Noto Sans JP', sans-serif; line-height: 1.8;
+            overflow-x: hidden;
         }
 
         /* ヘッダー */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 50px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
-            z-index: 1000; background: rgba(18, 18, 18, 0.9); backdrop-filter: blur(10px);
+            z-index: 1000; background: rgba(18, 18, 18, 0.5); backdrop-filter: blur(10px);
         }
 
         .header-logo-wrap { display: flex; align-items: center; }
-        
-        /* ロゴ画像の設定（ここにお手持ちのロゴファイルを指定してください） */
-        .company-logo {
-            height: 40px; /* ロゴの高さ */
-            margin-right: 15px;
-            filter: brightness(0) invert(1); /* 黒ロゴを白っぽく反転させる設定（不要なら消してください） */
-        }
-
-        .logo-text {
-            font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700;
-            letter-spacing: 0.1em;
-        }
+        .logo-text { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700; letter-spacing: 0.1em; }
 
         nav ul { list-style: none; display: flex; margin: 0; }
         nav ul li { margin-left: 30px; }
-        nav ul li a { text-decoration: none; color: var(--text-color); font-size: 0.85rem; letter-spacing: 0.1em; transition: 0.3s; }
-        nav ul li a:hover { color: var(--accent-color); }
+        nav ul li a { text-decoration: none; color: var(--text-color); font-size: 0.85rem; letter-spacing: 0.1em; }
 
-        /* ヒーローエリア */
-       .hero {
-    height: 100vh; /* 画面の高さ100%にする設定 */
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                url('DSCF0613.JPEG') no-repeat center center;
-    background-size: cover; /* ★ここが重要！画像の比率を保ったまま隙間なく埋める設定 */
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-}
-
-        .hero h2 {
-            font-family: var(--font-serif); font-size: 3.5rem; letter-spacing: 0.4em;
-            writing-mode: vertical-rl; text-combine-upright: all;
+        /* スライドショー背景（固定） */
+        .hero-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -1; /* 背面に固定 */
         }
 
-        /* 各セクション共通 */
-        section { padding: 150px 50px; max-width: 1000px; margin: 0 auto; }
-        .section-title { font-family: var(--font-serif); font-size: 2.5rem; color: var(--accent-color); text-align: center; margin-bottom: 80px; }
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 2s ease-in-out;
+        }
 
-        /* 写真のグリッド */
-        .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .work-item { overflow: hidden; border: 1px solid #333; height: 400px; position: relative; }
-        .work-img { width: 100%; height: 100%; background-size: cover; background-position: center; transition: 1.2s cubic-bezier(0.2, 1, 0.3, 1); }
-        .work-item:hover .work-img { transform: scale(1.08); }
+        .slide.active { opacity: 1; }
 
-        footer { text-align: center; padding: 100px 50px; border-top: 1px solid #333; font-size: 0.7rem; color: #666; }
+        /* 全体にかける暗いフィルター */
+        .hero-container::after {
+            content: ''; position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+
+        /* スクロールコンテンツ */
+        .scroll-section {
+            height: 100vh; /* 1画面分 */
+            display: flex; align-items: center;
+            position: relative;
+            padding: 0 10%;
+        }
+
+        /* キャッチコピー（縦書き） */
+        .copy-text {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            letter-spacing: 0.5em;
+            writing-mode: vertical-rl;
+            text-combine-upright: all;
+            white-space: nowrap;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
+        }
+
+        /* 表示位置をバラバラにする設定 */
+        .pos-left { justify-content: flex-start; }
+        .pos-center { justify-content: center; }
+        .pos-right { justify-content: flex-end; }
+
+        footer {
+            text-align: center; padding: 50px; background: #121212;
+            font-size: 0.7rem; color: #888;
+        }
 
         @media (max-width: 768px) {
-            .hero h2 { font-size: 2rem; }
-            header { padding: 15px 20px; flex-direction: column; }
-            nav ul { margin-top: 15px; }
+            .copy-text { font-size: 2rem; }
+            header { padding: 15px 20px; }
             nav ul li { margin-left: 15px; }
         }
     </style>
@@ -88,40 +100,40 @@
 
 <header>
     <div class="header-logo-wrap">
-        <img src="https://via.placeholder.com/150x50/FFFFFF/000000?text=LOGO" alt="Logo" class="company-logo">
         <div class="logo-text">勝一商店株式会社</div>
     </div>
     <nav>
-    <ul>
-        <li><a href="index.html">HOME</a></li>
-        <li><a href="about.html">会社案内</a></li>
-        <li><a href="business.html">事業内容</a></li>
-        <li><a href="works.html">施工事例</a></li>
-        <li><a href="#contact">お問い合わせ</a></li> </ul>
-</nav>    </nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="about.html">会社案内</a></li>
+            <li><a href="business.html">事業内容</a></li>
+            <li><a href="works.html">施工事例</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+    </nav>
 </header>
 
-<div class="hero">
-    <h2 data-aos="fade-up" data-aos-duration="2000">確かな技術、<br>歴史を繋ぐ。</h2>
+<div class="hero-container">
+    <div class="slide active" style="background-image: url('DSCF0613.JPEG');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1596796335133-149303c27633?q=80&w=2000');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1582238473724-4f8e53488730?q=60&w=800');"></div>
 </div>
 
-<section id="about">
-    <h3 class="section-title" data-aos="fade-left" data-aos-duration="1500">会社案内</h3>
-    <p data-aos="fade-up" data-aos-delay="300">勝一商店株式会社は、地域に根ざした誠実なモノづくりを追求しています。お客様の想いに寄り添い、長く愛される空間を提供します。</p>
+<section class="scroll-section pos-left">
+    <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
+        物語の続きを、あなたと描く。
+    </div>
 </section>
 
-<section id="works">
-    <h3 class="section-title" data-aos="fade-up">施工事例</h3>
-    <div class="work-grid">
-        <div class="work-item" data-aos="fade-up" data-aos-delay="100">
-            <div class="work-img" style="background-image: url('https://images.unsplash.com/photo-1582238473724-4f8e53488730?q=60&w=800');"></div>
-        </div>
-        <div class="work-item" data-aos="fade-up" data-aos-delay="300">
-            <div class="work-img" style="background-image: url('https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=60&w=800');"></div>
-        </div>
-        <div class="work-item" data-aos="fade-up" data-aos-delay="500">
-            <div class="work-img" style="background-image: url('https://images.unsplash.com/photo-1618219878837-7f525f0e34b1?q=60&w=800');"></div>
-        </div>
+<section class="scroll-section pos-right">
+    <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
+        時をリノベートする。<br>人生をデザインする。
+    </div>
+</section>
+
+<section class="scroll-section pos-center">
+    <div class="copy-text" data-aos="fade-up" data-aos-duration="2000">
+        森を活かし、暮らしを「勝」つ。
     </div>
 </section>
 
@@ -131,16 +143,24 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({
-        offset: 100,
-        delay: 0,
-        duration: 1000,
-        easing: 'ease-out-back',
-        once: false, // 繰り返し動かしたい場合はfalse
-        mirror: true,
-    });
+    // 初期化
+    AOS.init();
+
+    // スライドショーの制御
+    const slides = document.querySelectorAll('.slide');
+    let currentIndex = 0;
+
+    function nextSlide() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+    }
+
+    setInterval(nextSlide, 5000); // 5秒ごとに背景切り替え
 </script>
 
+</body>
+</html>
 </body>
 </html>
 

@@ -1,92 +1,236 @@
-/* 新しい導入セクションのスタイル */
-.intro-section {
-    background-color: #121212; /* 背景を黒に固定 */
-    padding: 100px 0;
-    position: relative;
-    z-index: 5; /* スライドショーより手前に */
-}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勝一商店株式会社</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;500&family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --text-color: #ffffff;
+            --accent-color: #bfa071;
+            --font-serif: 'Noto Serif JP', serif;
+        }
 
-.intro-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 50px;
-    padding: 0 50px;
-}
+        body {
+            margin: 0; padding: 0;
+            background-color: #000;
+            color: var(--text-color);
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+        }
 
-.intro-text {
-    flex: 1.2;
-}
+        /* ヘッダー */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 40px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
+            z-index: 100; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px);
+        }
 
-.intro-text h2 {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    color: var(--accent-color);
-    margin-bottom: 30px;
-    font-weight: 500;
-}
+        .logo-text { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 400; letter-spacing: 0.2em; color: #fff; text-decoration: none; }
 
-.intro-text p {
-    font-size: 1rem;
-    line-height: 2;
-    margin-bottom: 20px;
-    font-weight: 300;
-    color: #ccc;
-}
+        nav ul { list-style: none; display: flex; margin: 0; padding: 0; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.1em; transition: 0.3s; opacity: 0.8; }
+        nav ul li a:hover { opacity: 1; color: var(--accent-color); }
 
-.intro-image {
-    flex: 0.8;
-}
+        /* 背景固定スライドショー */
+        .hero-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -2; overflow: hidden;
+        }
 
-.intro-image img {
-    width: 100%;
-    height: 600px; /* 縦長の画像にする */
-    object-fit: cover;
-    border-radius: 2px;
-}
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 1.2s ease-in-out;
+        }
 
-/* スマホ用設定 */
-@media (max-width: 768px) {
-    .intro-container {
-        flex-direction: column;
-        padding: 0 30px;
-        gap: 30px;
-    }
-    .intro-image {
-        width: 100%;
-        text-align: right; /* 画像を右に寄せる */
-    }
-    .intro-image img {
-        width: 70%; /* スマホでは少し小さくして右端へ */
-        height: 400px;
-    }
-    .intro-text h2 { font-size: 1.4rem; }
-}
+        .slide.active { opacity: 1; }
 
-#### 2. HTML（コンテンツ）の追加
-`</footer>` のすぐ上に、以下のコードを配置してください。
+        .hero-container::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); z-index: -1;
+        }
 
-```html
-<section class="intro-section">
-    <div class="intro-container">
-        <div class="intro-text" data-aos="fade-up">
-            <h2>はじめて訪れた方へ</h2>
-            <p>
-                森の記憶を、現代の暮らしへ。<br>
-                勝一商店は、代々受け継がれてきた木材への眼差しと、長年培った確かな技術で、時の流れを美しく彩る空間を創造します。
-            </p>
-            <p>
-                私たちのモノづくりは、単なる修繕や建築ではありません。それは、住まう人の物語を丁寧に汲み取り、新たな命を吹き込む「再生」の旅です。
-            </p>
-            <p>
-                木の香りに包まれ、心が安らぐ。そんな当たり前で、けれど何よりも贅沢な時間を、あなたと共に描きたい。勝一商店が提案する、新しい「和」の形をご覧ください。
-            </p>
+        /* コンテンツレイアウト */
+        .content-wrapper { position: relative; z-index: 1; width: 100%; }
+
+        .scroll-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            box-sizing: border-box;
+        }
+
+        .pos-left { justify-content: flex-start; text-align: left; }
+        .pos-right { justify-content: flex-end; text-align: right; }
+        .pos-center { justify-content: center; text-align: center; }
+
+        .copy-text {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 200;
+            letter-spacing: 0.4em;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            line-height: 2;
+            white-space: nowrap;
+        }
+
+        /* 新設：はじめての方へセクション */
+        .intro-section {
+            background-color: #000; /* 背景画像と一緒にスクロールさせるため背景色を指定 */
+            padding: 120px 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .intro-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            padding: 0 50px;
+        }
+
+        .intro-text { flex: 1.2; }
+        .intro-text h2 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 40px;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+        }
+
+        .intro-text p {
+            font-size: 0.95rem;
+            line-height: 2.2;
+            margin-bottom: 25px;
+            font-weight: 300;
+            color: #ccc;
+            letter-spacing: 0.05em;
+        }
+
+        .intro-image { flex: 0.8; }
+        .intro-image img {
+            width: 100%;
+            height: 650px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        footer { text-align: center; padding: 40px; background: #000; font-size: 0.7rem; color: #555; letter-spacing: 0.1em; }
+
+        /* スマホ対応 */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; }
+            .logo-text { font-size: 0.9rem; margin-bottom: 5px; }
+            nav ul li { margin-left: 12px; }
+            
+            .scroll-section { padding: 0 5%; }
+            .copy-text { font-size: 0.85rem; letter-spacing: 0.2em; }
+
+            .intro-container { flex-direction: column; padding: 0 30px; gap: 40px; }
+            .intro-text h2 { font-size: 1.4rem; margin-bottom: 25px; }
+            .intro-text p { font-size: 0.85rem; line-height: 2; }
+            
+            .intro-image { width: 100%; text-align: right; } /* 画像を右寄せ */
+            .intro-image img { width: 80%; height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo-text">勝一商店株式会社</a>
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="business.html">BUSINESS</a></li>
+            <li><a href="works.html">WORKS</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="hero-container">
+    <div class="slide active" style="background-image: url('DSCF0613.JPEG');"></div>
+    <div class="slide" style="background-image: url('IMG_0538.HEIC');"></div>
+    <div class="slide" style="background-image: url('IMG_5250.JPG');"></div>
+    <div class="slide" style="background-image: url('IMG_7222.jpg');"></div>
+</div>
+
+<div class="content-wrapper">
+    <section class="scroll-section pos-left">
+        <div class="copy-text" data-aos="fade-right" data-aos-duration="1500">
+            物語の続きを、あなたと描く。
         </div>
-        <div class="intro-image" data-aos="fade-left">
-            <img src="IMG_5250.JPG" alt="勝一商店の家づくり">
-        </div>
-    </div>
-</section>
+    </section>
 
-これで、情緒的なキャッチコピーのスクロールを終えた後に、しっかりと腰を据えて読んでもらう「勝一商店の想い」へと流れる構成になります。ぜひ試してみてください！
+    <section class="scroll-section pos-right">
+        <div class="copy-text" data-aos="fade-left" data-aos-duration="1500">
+            時をリノベートする。人生をデザインする。
+        </div>
+    </section>
+
+    <section class="scroll-section pos-center">
+        <div class="copy-text" data-aos="fade-up" data-aos-duration="1500">
+            森を活かし、暮らしを「勝」つ。
+        </div>
+    </section>
+
+    <section class="intro-section">
+        <div class="intro-container">
+            <div class="intro-text" data-aos="fade-up" data-aos-duration="1200">
+                <h2>はじめて訪れた方へ</h2>
+                <p>
+                    森の記憶を、現代の暮らしへ。<br>
+                    勝一商店は、代々受け継がれてきた木材への眼差しと、長年培った確かな技術で、時の流れを美しく彩る空間を創造します。
+                </p>
+                <p>
+                    私たちのモノづくりは、単なる修繕や建築ではありません。それは、住まう人の物語を丁寧に汲み取り、新たな命を吹き込む「再生」の旅です。
+                </p>
+                <p>
+                    木の香りに包まれ、心が安らぐ。そんな当たり前で、けれど何よりも贅沢な時間を、あなたと共に描きたい。勝一商店が提案する、新しい「和」の形をご覧ください。
+                </p>
+            </div>
+            <div class="intro-image" data-aos="fade-left" data-aos-duration="1200">
+                <img src="IMG_5250.JPG" alt="勝一商店の家づくり">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 勝一商店株式会社
+    </footer>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ once: false });
+
+    // スライドショー制御
+    const slides = document.querySelectorAll('.slide');
+    let currentIndex = 0;
+    function nextSlide() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+    }
+    // 3秒ごとに切り替え
+    setInterval(nextSlide, 3000);
+</script>
+
+</body>
+</html>

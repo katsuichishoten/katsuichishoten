@@ -1,1 +1,243 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Works | Katsuichi Shoten</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #0a0a0a;
+            --color-text: #ffffff;
+            --color-accent: #bfa071;
+            --font-serif: 'Noto Serif JP', serif;
+            --font-eng: 'Playfair Display', serif;
+            --header-height: 90px;
+            --header-height-sp: 70px;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.pattern');
+            opacity: 0.12; pointer-events: none; z-index: 9999;
+        }
+
+        /* --- Header --- */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
+            z-index: 2000;
+            background: rgba(0,0,0,0.9);
+            height: var(--header-height);
+        }
+
+        .logo-image { height: 45px; width: auto; display: block; }
+
+        /* --- Language Switch --- */
+        .lang-switch {
+            display: flex; align-items: center; gap: 12px; margin-left: 35px;
+            font-family: var(--font-eng);
+        }
+        .lang-btn {
+            text-decoration: none; color: #fff; font-size: 0.7rem;
+            opacity: 0.4; transition: 0.3s; letter-spacing: 0.15em;
+        }
+        .lang-btn.active { opacity: 1; pointer-events: none; }
+        .lang-btn:hover { opacity: 1; color: var(--color-accent); }
+        .lang-divider { color: rgba(255,255,255,0.2); font-size: 0.6rem; }
+
+        /* --- Navigation --- */
+        .nav-pc { display: flex; align-items: center; }
+        .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
+        .nav-pc ul li a { 
+            text-decoration: none; color: #fff; font-size: 0.75rem; 
+            letter-spacing: 0.15em; transition: 0.5s; opacity: 0.75; 
+        }
+        .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
+
+        .menu-trigger {
+            display: none; width: 30px; height: 24px; position: relative; z-index: 3000;
+            background: none; border: none; cursor: pointer;
+        }
+        .menu-trigger span {
+            position: absolute; left: 0; width: 100%; height: 1px;
+            background-color: #fff; transition: all 0.4s;
+        }
+        .menu-trigger span:nth-of-type(1) { top: 0; }
+        .menu-trigger span:nth-of-type(2) { top: 11px; }
+        .menu-trigger span:nth-of-type(3) { bottom: 0; }
+        .menu-trigger.active span:nth-of-type(1) { transform: translateY(11px) rotate(-45deg); }
+        .menu-trigger.active span:nth-of-type(2) { opacity: 0; }
+        .menu-trigger.active span:nth-of-type(3) { transform: translateY(-12px) rotate(45deg); }
+
+        .nav-sp {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+            background: rgba(10, 10, 10, 0.98); z-index: 2500;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: all 0.5s; visibility: hidden;
+        }
+        .nav-sp.active { right: 0; visibility: visible; }
+        .nav-sp ul { list-style: none; padding: 0; text-align: center; }
+        .nav-sp ul li { margin-bottom: 30px; }
+        .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; letter-spacing: 0.2em; }
+
+        /* --- Works Page Styling --- */
+        .page-header { padding-top: 180px; padding-bottom: 80px; text-align: center; }
+        .page-title-en {
+            font-family: var(--font-eng); font-size: 3rem; letter-spacing: 0.1em;
+            color: var(--color-accent); display: block; margin-bottom: 10px;
+        }
+        .page-title-jp { font-family: var(--font-serif); font-size: 0.9rem; letter-spacing: 0.5em; opacity: 0.6; }
+
+        .works-grid {
+            max-width: 1200px; margin: 0 auto 150px; padding: 0 40px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px;
+        }
+        .works-item { position: relative; overflow: hidden; background: #111; }
+        .works-img-wrap { width: 100%; aspect-ratio: 3 / 2; overflow: hidden; }
+        .works-img-wrap img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: transform 0.8s ease; filter: grayscale(20%);
+        }
+        .works-item:hover .works-img-wrap img { transform: scale(1.05); }
+        
+        .works-info { padding: 20px 0; }
+        .works-category { font-size: 0.7rem; color: var(--color-accent); letter-spacing: 0.1em; font-family: var(--font-eng); }
+        .works-name { font-family: var(--font-serif); font-size: 1.1rem; margin: 5px 0 0; font-weight: 400; }
+
+        footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; background: #000; }
+
+        @media (max-width: 768px) {
+            header { padding: 0 25px; height: var(--header-height-sp); }
+            .nav-pc { display: none; }
+            .menu-trigger { display: block; }
+            .works-grid { grid-template-columns: 1fr; gap: 30px; padding: 0 30px; }
+            .page-title-en { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html">
+        <img src="../看板_540×450mm_1_out_1-01.png" alt="Katsuichi Shoten" class="logo-image">
+    </a>
+    
+    <nav class="nav-pc">
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="business.html">BUSINESS</a></li>
+            <li><a href="works.html">WORKS</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+        <div class="lang-switch">
+            <a href="../works.html" class="lang-btn">JP</a>
+            <span class="lang-divider">/</span>
+            <span class="lang-btn active">EN</span>
+        </div>
+    </nav>
+
+    <button class="menu-trigger" id="js-hamburger">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+
+<nav class="nav-sp" id="js-nav-sp">
+    <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="business.html">BUSINESS</a></li>
+        <li><a href="works.html">WORKS</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+        <li style="margin-top: 30px;">
+            <div class="lang-switch" style="justify-content: center;">
+                <a href="../works.html" class="lang-btn" style="font-size: 1rem;">JP</a>
+                <span class="lang-divider">/</span>
+                <span class="lang-btn active" style="font-size: 1rem;">EN</span>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<main>
+    <div class="page-header" data-aos="fade-down">
+        <span class="page-title-en">WORKS</span>
+        <span class="page-title-jp">施工事例</span>
+    </div>
+
+    <section class="works-grid">
+        <div class="works-item" data-aos="fade-up">
+            <div class="works-img-wrap">
+                <img src="../IMG_7222.jpg" alt="Work 01">
+            </div>
+            <div class="works-info">
+                <span class="works-category">RENOVATION</span>
+                <h3 class="works-name">Historic House Project in Asahikawa</h3>
+            </div>
+        </div>
+
+        <div class="works-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="works-img-wrap">
+                <img src="../DSCF0613.JPEG" alt="Work 02">
+            </div>
+            <div class="works-info">
+                <span class="works-category">INTERIOR</span>
+                <h3 class="works-name">Modern Wood Concept Studio</h3>
+            </div>
+        </div>
+
+        <div class="works-item" data-aos="fade-up">
+            <div class="works-img-wrap">
+                <img src="../IMG_9093.JPG" alt="Work 03">
+            </div>
+            <div class="works-info">
+                <span class="works-category">FURNITURE</span>
+                <h3 class="works-name">Custom Oak Dining Collection</h3>
+            </div>
+        </div>
+
+        <div class="works-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="works-img-wrap">
+                <img src="../IMG_0538.jpg" alt="Work 04">
+            </div>
+            <div class="works-info">
+                <span class="works-category">RENOVATION</span>
+                <h3 class="works-name">Higashikawa Satellite Office</h3>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>&copy; Katsuichi Shoten Co., Ltd.</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1200, once: true });
+
+    const hamburger = document.getElementById('js-hamburger');
+    const navSp = document.getElementById('js-nav-sp');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navSp.classList.toggle('active');
+    });
+</script>
+</body>
+</html>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -31,21 +30,28 @@
             line-height: 1.8;
         }
 
-        body.nav-open { overflow: hidden; }
+        /* 共通の粒子テクスチャ（メインと統一） */
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.08; pointer-events: none; z-index: 9999;
+        }
 
-        /* --- ヘッダー（メインページと共通） --- */
+        /* --- ヘッダー --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
             z-index: 2000; height: var(--header-height);
-            background: rgba(10, 10, 10, 0.9);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .logo-image { height: 40px; width: auto; }
+        .logo-image { height: 40px; width: auto; transition: 0.3s; }
+        .logo-image:hover { opacity: 0.7; }
 
-        .nav-pc ul { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; }
-        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; opacity: 0.7; transition: 0.5s; }
+        .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
+        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; opacity: 0.6; transition: 0.5s; }
         .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
 
         .menu-trigger { display: none; width: 30px; height: 24px; position: relative; z-index: 3000; background: none; border: none; cursor: pointer; }
@@ -61,98 +67,72 @@
         .nav-sp.active { right: 0; visibility: visible; }
         .nav-sp ul { list-style: none; padding: 0; text-align: center; }
         .nav-sp ul li { margin-bottom: 30px; }
-        .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; font-family: var(--font-serif); }
+        .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; font-family: var(--font-serif); letter-spacing: 0.2em; }
 
-        /* --- 下層ページ ヒーローエリア --- */
+        /* --- ヒーローエリア：ゆっくりとしたズームアニメーション --- */
         .page-header {
-            height: 40vh;
+            height: 50vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('IMG_5250.JPG') center/cover;
+            position: relative;
+            overflow: hidden;
             margin-top: var(--header-height);
         }
 
-        .page-header h1 {
-            font-family: var(--font-serif);
-            font-size: 2.5rem;
-            letter-spacing: 0.2em;
-            margin: 0;
-            font-weight: 200;
+        .page-header-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('IMG_5250.JPG') center/cover;
+            z-index: -1;
+            animation: heroSlowZoom 20s infinite alternate;
         }
 
-        .page-header span {
-            font-family: var(--font-eng);
-            color: var(--color-accent);
-            font-size: 0.9rem;
-            letter-spacing: 0.4em;
-            margin-top: 10px;
+        @keyframes heroSlowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
+
+        .page-header h1 { font-family: var(--font-serif); font-size: 2.8rem; letter-spacing: 0.25em; margin: 0; font-weight: 200; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .page-header span { font-family: var(--font-eng); color: var(--color-accent); font-size: 0.9rem; letter-spacing: 0.5em; margin-top: 15px; opacity: 0.8; }
 
         /* --- 事業内容セクション --- */
-        .business-section {
-            max-width: 1100px;
-            margin: 100px auto;
-            padding: 0 40px;
-        }
+        .business-section { max-width: 1100px; margin: 120px auto; padding: 0 40px; }
+        .category-block { margin-bottom: 180px; }
 
-        .category-block {
-            margin-bottom: 150px;
-        }
-
-        .category-title {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 60px;
-        }
-
-        .category-title h2 {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin: 0;
-        }
-
+        .category-title { display: flex; align-items: center; gap: 30px; margin-bottom: 80px; }
+        .category-title h2 { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; margin: 0; white-space: nowrap; }
+        
+        /* 金色のラインが伸びるアニメーション */
         .category-title .line {
-            flex: 1;
-            height: 1px;
+            flex: 1; height: 1px;
             background: linear-gradient(to right, var(--color-accent), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 1.5s cubic-bezier(0.215, 0.61, 0.355, 1);
         }
+        .category-block.aos-animate .category-title .line { transform: scaleX(1); }
 
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 50px; }
 
         .service-card {
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 40px;
-            background: rgba(255,255,255,0.02);
-            transition: 0.4s;
+            border-left: 1px solid rgba(191, 160, 113, 0.2);
+            padding: 20px 0 20px 40px;
+            transition: 0.5s;
+            position: relative;
         }
 
-        .service-card:hover {
-            border-color: var(--color-accent);
-            background: rgba(191, 160, 113, 0.05);
+        .service-card::before {
+            content: ""; position: absolute; left: -1px; top: 0; width: 1px; height: 0;
+            background: var(--color-accent); transition: 0.5s;
         }
 
-        .service-card h3 {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            color: var(--color-accent);
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
+        .service-card:hover { transform: translateX(10px); }
+        .service-card:hover::before { height: 100%; }
 
-        .service-card p {
-            font-size: 0.85rem;
-            color: #aaa;
-            line-height: 2;
-            margin: 0;
-        }
+        .service-card h3 { font-family: var(--font-serif); font-size: 1.2rem; color: #fff; margin-bottom: 25px; letter-spacing: 0.05em; transition: 0.3s; }
+        .service-card:hover h3 { color: var(--color-accent); }
+        .service-card p { font-size: 0.9rem; color: #999; line-height: 2.4; margin: 0; text-align: justify; }
 
         footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; border-top: 1px solid #1a1a1a; }
 
@@ -160,9 +140,10 @@
             header { padding: 0 30px; height: var(--header-height-sp); }
             .nav-pc { display: none; }
             .menu-trigger { display: block; }
-            .page-header h1 { font-size: 1.8rem; }
-            .business-section { margin: 60px auto; }
-            .category-title h2 { font-size: 1.4rem; }
+            .page-header h1 { font-size: 2rem; }
+            .category-title { margin-bottom: 40px; }
+            .category-title h2 { font-size: 1.5rem; }
+            .service-card { padding: 20px 0 20px 30px; }
         }
     </style>
 </head>
@@ -193,8 +174,9 @@
 </nav>
 
 <div class="page-header">
-    <h1 data-aos="fade-up">事業内容</h1>
-    <span data-aos="fade-up" data-aos-delay="200">OUR BUSINESS</span>
+    <div class="page-header-bg"></div>
+    <h1 data-aos="fade-up" data-aos-duration="1500">事業内容</h1>
+    <span data-aos="fade-up" data-aos-delay="300" data-aos-duration="1500">OUR BUSINESS</span>
 </div>
 
 <div class="business-section">
@@ -205,15 +187,15 @@
             <div class="line"></div>
         </div>
         <div class="service-grid">
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
                 <h3>住宅・商業施設のデザイン施工</h3>
                 <p>新築住宅から店舗まで、北海道の風土に溶け込みつつ、個性が光る空間をデザイン。素材の質感と使い心地を追求した施工を行います。</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
                 <h3>民泊設計・デザイン施工</h3>
                 <p>単なる宿泊施設ではなく「体験」を生む空間へ。収益性とデザイン性を両立させた、選ばれる民泊物件をプロデュースします。</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="600">
                 <h3>サウナデザイン設計施工</h3>
                 <p>極上のととのい空間を。本格的なフィンランド式サウナから家庭用サウナまで、断熱と意匠にこだわった設計・施工を承ります。</p>
             </div>
@@ -226,15 +208,15 @@
             <div class="line"></div>
         </div>
         <div class="service-grid">
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
                 <h3>運営・集客代行</h3>
                 <p>ターゲットに響くリスティング作成から価格戦略まで。オーナー様に代わって、稼働率と満足度を最大化する運営を行います。</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
                 <h3>物件トータルコーディネート</h3>
                 <p>家具選定から小物配置、アートの選定まで。コンセプトに合わせた空間作りを一括で引き受け、物件の価値を高めます。</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="600">
                 <h3>民泊清掃・メンテナンス</h3>
                 <p>おもてなしの基本は清潔さから。細部まで行き届いた清掃と定期点検により、常に最高の状態でお客様をお迎えします。</p>
             </div>
@@ -247,15 +229,15 @@
             <div class="line"></div>
         </div>
         <div class="service-grid">
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
                 <h3>家具設計制作</h3>
                 <p>空間にぴったりと収まる造作家具や、北海道産材を用いたオリジナル家具。時を経るほどに愛着のわく「道具」を制作します。</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
                 <h3>ライナウッド木材販売</h3>
                 <p>緑川木材株式会社の「ライナウッド」製品を取り扱い。高い耐久性とデザイン性を兼ね備えた、次世代の木材をご提案します。</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="600">
                 <h3>広告デザイン・看板制作</h3>
                 <p>建物のコンセプトを体現するロゴや看板。視覚的なアプローチからも、物件や店舗のブランディングを支えます。</p>
             </div>
@@ -268,7 +250,7 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({ duration: 1200, once: true });
+    AOS.init({ duration: 1500, once: false, offset: 100 });
     
     const hamburger = document.getElementById('js-hamburger');
     const navSp = document.getElementById('js-nav-sp');

@@ -49,12 +49,15 @@
         nav ul li a:hover { color: var(--accent-color); }
 
         /* ヒーローエリア */
-        .hero {
-            height: 100vh;
-           background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-            url('DSCF0613.JPEG');
-            display: flex; justify-content: center; align-items: center;
-        }
+       .hero {
+    height: 100vh; /* 画面の高さ100%にする設定 */
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                url('DSCF0613.JPEG') no-repeat center center;
+    background-size: cover; /* ★ここが重要！画像の比率を保ったまま隙間なく埋める設定 */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
 
         .hero h2 {
             font-family: var(--font-serif); font-size: 3.5rem; letter-spacing: 0.4em;
@@ -141,4 +144,4 @@
 </body>
 </html>
 
-勝一商店株式会社のブランド戦略をまとめたスライドと、ウェブサイト用の最新コードが完成しました。特にスクロールアニメーションは、高級感を左右する重要な要素ですので、ぜひプレビューで動きを確認してみてください！
+

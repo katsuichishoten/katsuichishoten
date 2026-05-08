@@ -31,10 +31,15 @@
             line-height: 1.8;
         }
 
+        /* 画面全体の閉じられた状態を防ぐ */
+        body.nav-open {
+            overflow: hidden;
+        }
+
         body::before {
             content: "";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.pattern');
             opacity: 0.12; pointer-events: none; z-index: 9999;
         }
 
@@ -49,54 +54,99 @@
         }
 
         .logo-image {
-            height: 40px; width: auto; display: block; opacity: 0.95;
+            height: 45px; width: auto; display: block; opacity: 0.95;
             filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
         }
 
         /* --- PCナビゲーション --- */
         .nav-pc { display: block; }
-        .nav-pc ul { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; }
+        .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
         .nav-pc ul li a { 
             text-decoration: none; color: #fff; font-size: 0.75rem; 
             letter-spacing: 0.15em; transition: 0.5s; opacity: 0.75; 
+            font-weight: 300;
         }
         .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
 
-        /* --- ハンバーガーボタン（初期状態非表示） --- */
+        /* --- ★ハンバーガーボタン（バツ印アニメーション実装） --- */
         .menu-trigger {
-            display: none; width: 30px; height: 24px; position: relative; z-index: 3000;
-            background: none; border: none; cursor: pointer;
+            display: none; /* 初期状態非表示 */
+            width: 30px; height: 24px; position: relative; z-index: 3000;
+            background: none; border: none; cursor: pointer; padding: 0;
         }
+        
+        /* 3本線の共通スタイル */
         .menu-trigger span {
             position: absolute; left: 0; width: 100%; height: 1px;
-            background-color: #fff; transition: all 0.4s;
+            background-color: #fff; /* 線の色 */
+            transition: all 0.4s ease-in-out; /* ★アニメーションの速さ */
         }
+        
+        /* 1本目（上） */
         .menu-trigger span:nth-of-type(1) { top: 0; }
+        /* 2本目（真ん中） */
         .menu-trigger span:nth-of-type(2) { top: 11px; }
+        /* 3本目（下） */
         .menu-trigger span:nth-of-type(3) { bottom: 0; }
 
-        .menu-trigger.active span:nth-of-type(1) { transform: translateY(11px) rotate(-45deg); }
-        .menu-trigger.active span:nth-of-type(2) { opacity: 0; }
-        .menu-trigger.active span:nth-of-type(3) { transform: translateY(-12px) rotate(45deg); }
+        /* ★アクティブ時（メニュー開いた時）のバツ印スタイル */
+        
+        /* 1本目を回転させてバツの一部に */
+        .menu-trigger.active span:nth-of-type(1) {
+            transform: translateY(11px) rotate(-45deg);
+        }
+        
+        /* 2本目を透明にして消す */
+        .menu-trigger.active span:nth-of-type(2) {
+            opacity: 0;
+        }
+        
+        /* 3本目を回転させてバツの一部に */
+        .menu-trigger.active span:nth-of-type(3) {
+            transform: translateY(-12px) rotate(45deg);
+        }
 
-        /* --- スマホメニュー（初期状態非表示） --- */
+        /* --- スマホメニュー（オーバーレイ） --- */
         .nav-sp {
             position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-            background: rgba(10, 10, 10, 0.95); z-index: 2500;
+            background: rgba(10, 10, 10, 0.98); z-index: 2500;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            visibility: hidden; /* ★閉じている時は非表示 */
         }
-        .nav-sp.active { right: 0; }
+        
+        /* メニュー開いた時 */
+        .nav-sp.active {
+            right: 0;
+            visibility: visible;
+        }
+        
         .nav-sp ul { list-style: none; padding: 0; text-align: center; }
-        .nav-sp ul li { margin-bottom: 30px; opacity: 0; transform: translateY(20px); transition: 0.4s; }
-        .nav-sp.active ul li { opacity: 1; transform: translateY(0); }
+        
+        /* リストアイテムのアニメーション（時間差で浮かび上がる） */
+        .nav-sp ul li {
+            margin-bottom: 35px; opacity: 0; transform: translateY(20px);
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        .nav-sp.active ul li {
+            opacity: 1; transform: translateY(0);
+        }
+        
+        /* 時間差の設定 */
         .nav-sp.active ul li:nth-child(1) { transition-delay: 0.2s; }
         .nav-sp.active ul li:nth-child(2) { transition-delay: 0.3s; }
         .nav-sp.active ul li:nth-child(3) { transition-delay: 0.4s; }
         .nav-sp.active ul li:nth-child(4) { transition-delay: 0.5s; }
         .nav-sp.active ul li:nth-child(5) { transition-delay: 0.6s; }
 
-        .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; font-family: var(--font-serif); letter-spacing: 0.2em; }
+        .nav-sp ul li a {
+            color: #fff; text-decoration: none; font-size: 1.3rem;
+            font-family: var(--font-serif); letter-spacing: 0.25em;
+            font-weight: 300; transition: color 0.3s;
+        }
+        .nav-sp ul li a:hover {
+            color: var(--color-accent);
+        }
 
         /* --- スライドショー & コピー --- */
         .hero-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -2; }
@@ -104,6 +154,8 @@
         .slide.active { opacity: 0.5; transform: scale(1.0); }
 
         .content-wrapper { position: relative; z-index: 10; }
+        
+        /* キャッチコピー */
         .section-copy { height: 100vh; display: flex; align-items: center; box-sizing: border-box; position: relative; z-index: 5; }
         .copy-vertical { writing-mode: vertical-rl; font-family: var(--font-serif); font-size: 1.7rem; font-weight: 200; letter-spacing: 0.5em; color: #fff; line-height: 2.2; position: relative; }
         .copy-vertical::before { content: ""; position: absolute; top: -120px; right: 50%; width: 1px; height: 100px; background: linear-gradient(to bottom, transparent, var(--color-accent)); }
@@ -123,22 +175,29 @@
         .intro-text { flex: 1.2; }
         .intro-text .section-num { font-family: var(--font-eng); color: var(--color-accent); font-size: 0.8rem; margin-bottom: 20px; display: block; letter-spacing: 0.2em; }
         .intro-text h2 { font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 50px; line-height: 1.6; color: #fff; font-weight: 400; }
-        .intro-text p { font-size: 0.95rem; line-height: 2.4; color: #bbb; margin-bottom: 2rem; }
+        .intro-text p { font-size: 0.95rem; line-height: 2.4; color: #bbb; margin-bottom: 2rem; text-align: justify; }
+        .intro-text p b { color: #fff; font-weight: 500; font-size: 1.1rem; }
+
         .info-section { background: #000; padding: 150px 80px; border-top: 1px solid #1a1a1a; position: relative; z-index: 10; }
         .info-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
         .info-title { font-family: var(--font-serif); font-size: 1.3rem; letter-spacing: 0.3em; color: var(--color-accent); }
         .office-list { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+        .office-item { margin-bottom: 40px; }
         .office-item h3 { font-size: 0.8rem; color: #fff; font-family: var(--font-serif); border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 15px; }
+        .office-item .sub-name { font-size: 0.85rem; color: #eee; margin-bottom: 10px; font-weight: 500; }
         .office-item .address-jp { font-size: 0.8rem; color: #aaa; line-height: 1.8; margin: 0; }
+        .office-item .address-en { font-size: 0.7rem; color: #666; font-family: var(--font-eng); font-style: italic; margin-top: 5px; }
 
         footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; font-family: var(--font-serif); background: #000; }
 
         /* --- レスポンシブ（スマホ） --- */
         @media (max-width: 768px) {
             header { padding: 0 30px; height: var(--header-height-sp); background: rgba(0,0,0,0.85); }
-            .logo-image { height: 32px; }
-            .nav-pc { display: none; } /* PCナビを消す */
-            .menu-trigger { display: block; } /* 3本線を出す */
+            .logo-image { height: 38px; }
+            
+            /* ★PCナビを消してハンバーガーを表示 */
+            .nav-pc { display: none; }
+            .menu-trigger { display: block; }
 
             .intro-container { flex-direction: column; gap: 50px; padding: 0 30px; }
             .intro-image-wrap::after { display: none; }
@@ -147,7 +206,7 @@
             .copy-vertical { font-size: 1.4rem; }
             .copy-horizontal { font-size: 1.3rem; line-height: 1.8; }
             
-            /* ★スマホ専用：森を活かし、で改行 */
+            /* スマホ専用改行 */
             .copy-horizontal span { display: block; }
             
             .info-grid { grid-template-columns: 1fr; }
@@ -224,10 +283,11 @@
             <div class="intro-text">
                 <span class="section-num" data-aos="fade-in">01 / INTRODUCTION</span>
                 <h2 data-aos="fade-up" data-aos-delay="200">はじめまして、<br>勝一商店です。</h2>
+                
                 <div data-aos="fade-up" data-aos-delay="400">
                     <p>たとえば、古い梁に刻まれた傷跡に。<br>たとえば、北海道の森が育てた木の手触りに。<br>長い時間を旅してきたものだけが持つ、静かな美しさがあります。</p>
                     <p>「捨てる」という言葉を、「活かす」という意志に変えてみる。<br>それは、かつて誰かが紡いだ想いを受け継ぎ、新しいあなたの物語を重ねていくということ。</p>
-                    <p><b style="color:#fff;">「この暮らしで、よかった」</b><br>自分らしく生きることを、一途に選ぶ人のために。<br>森を活かし、暮らしを「勝」つ。</p>
+                    <p><b style="color: #fff; font-weight: 500;">「この暮らしで、よかった」</b><br>自分らしく生きることを、一途に選ぶ人のために。<br>森を活かし、暮らしを「勝」つ。</p>
                 </div>
             </div>
         </div>
@@ -239,31 +299,55 @@
             <div class="office-list">
                 <div class="office-item">
                     <h3>MIDCITY Office</h3>
+                    <div class="sub-name">勝一商店株式会社</div>
                     <p class="address-jp">〒070-0825 北海道旭川市北門町１３丁目２９４１−９</p>
+                    <p class="address-en">13-2941-9 Hokumon-cho Asahikawa-shi Hokkaido 070-0825 Japan</p>
                 </div>
                 <div class="office-item">
                     <h3>東川町サテライトオフィス</h3>
+                    <div class="sub-name">KAGUの家　ULTRA BUSSANTEN</div>
                     <p class="address-jp">〒071-1423 北海道上川郡東川町東町1丁目7番17号(C棟)</p>
+                    <p class="address-en">1-7-17-C Higashikawa-cho Kamikawa-gun Hokkaido 071-1423 Japan</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>&copy; 勝一商店株式会社 ALL RIGHTS RESERVED.</footer>
+    <footer>
+        &copy; 勝一商店株式会社 ALL RIGHTS RESERVED.
+    </footer>
 </div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
+    // AOS初期化
     AOS.init({ duration: 1500, once: false, offset: 100 });
 
-    // ハンバーガーメニューの開閉
-    const btn = document.getElementById('js-hamburger');
-    const nav = document.getElementById('js-nav-sp');
-    btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        nav.classList.toggle('active');
+    // ★ハンバーガーメニューの開閉制御
+    const hamburger = document.getElementById('js-hamburger');
+    const navSp = document.getElementById('js-nav-sp');
+    const body = document.body;
+
+    hamburger.addEventListener('click', () => {
+        // ボタンにactiveクラスを付与/削除（CSSでバツ印アニメーション）
+        hamburger.classList.toggle('active');
+        // メニューにactiveクラスを付与/削除（メニュー表示/非表示）
+        navSp.classList.toggle('active');
+        // bodyにnav-openクラスを付与/削除（メニュー開いている時はスクロール禁止）
+        body.classList.toggle('nav-open');
     });
 
+    // メニュー内のリンクをクリックしたら自動的に閉じる
+    const navLinks = navSp.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navSp.classList.remove('active');
+            body.classList.remove('nav-open');
+        });
+    });
+
+    // 背景スライドショー
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
     function nextSlide() {
@@ -273,10 +357,14 @@
     }
     setInterval(nextSlide, 6000);
 
-    // スクロール時のフェードアウト
+    // スクロール時の文字フェードアウト
     window.addEventListener('scroll', function() {
+        // メニュー開いている時は処理しない
+        if (body.classList.contains('nav-open')) return;
+        
         const copies = document.querySelectorAll('.copy-vertical, .copy-horizontal');
         const headerH = window.innerWidth <= 768 ? 70 : 90;
+        
         copies.forEach(copy => {
             const rect = copy.getBoundingClientRect();
             if (rect.top < 250) {
@@ -288,5 +376,6 @@
         });
     });
 </script>
+
 </body>
 </html>

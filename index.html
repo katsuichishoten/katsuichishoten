@@ -29,6 +29,7 @@
             font-family: 'Noto Sans JP', sans-serif;
             overflow-x: hidden;
             line-height: 1.8;
+            top: 0 !important; /* 翻訳バー対策 */
         }
 
         /* 画面全体の閉じられた状態を防ぐ */
@@ -42,6 +43,28 @@
             background-image: url('https://www.transparenttextures.com/patterns/stardust.pattern');
             opacity: 0.12; pointer-events: none; z-index: 9999;
         }
+
+        /* --- 言語スイッチのデザイン --- */
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: 40px;
+            font-family: var(--font-eng);
+        }
+        .lang-btn {
+            background: none; border: none; color: #fff;
+            cursor: pointer; font-size: 0.7rem; opacity: 0.4;
+            padding: 0; transition: 0.3s; letter-spacing: 0.15em;
+            font-weight: 400;
+        }
+        .lang-btn:hover { opacity: 1; color: var(--color-accent); }
+        .lang-divider { color: rgba(255,255,255,0.2); font-size: 0.6rem; }
+
+        /* Google翻訳要素を徹底的に隠す */
+        #google_translate_element, .goog-te-banner-frame, .skiptranslate { display: none !important; }
+        .goog-te-balloon-frame { display: none !important; }
+        font { background-color: transparent !important; box-shadow: none !important; }
 
         /* --- ヘッダー設定 --- */
         header {
@@ -59,7 +82,7 @@
         }
 
         /* --- PCナビゲーション --- */
-        .nav-pc { display: block; }
+        .nav-pc { display: flex; align-items: center; }
         .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
         .nav-pc ul li a { 
             text-decoration: none; color: #fff; font-size: 0.75rem; 
@@ -126,6 +149,7 @@
         .nav-sp.active ul li:nth-child(3) { transition-delay: 0.4s; }
         .nav-sp.active ul li:nth-child(4) { transition-delay: 0.5s; }
         .nav-sp.active ul li:nth-child(5) { transition-delay: 0.6s; }
+        .nav-sp.active ul li:nth-child(6) { transition-delay: 0.7s; } /* 言語スイッチ用 */
 
         .nav-sp ul li a {
             color: #fff; text-decoration: none; font-size: 1.3rem;
@@ -187,6 +211,7 @@
             .info-grid { grid-template-columns: 1fr; }
             .office-list { grid-template-columns: 1fr; gap: 40px; }
             .info-section { padding: 100px 40px; }
+            .lang-switch { margin-left: 0; margin-top: 10px; }
         }
     </style>
 </head>
@@ -197,14 +222,22 @@
         <img src="看板_540×450mm_1_out_1-01.png" alt="勝一商店株式会社" class="logo-image">
     </a>
     
-    <nav class="nav-pc">
-        <ul>
-            <li><a href="index.html">HOME</a></li>
-            <li><a href="business.html">事業内容</a></li>
-            <li><a href="works.html">施工事例</a></li>
-            <li><a href="about.html">会社案内</a></li> <li><a href="contact.html">お問い合わせ</a></li>
-        </ul>
-    </nav>
+    <div class="nav-pc">
+        <nav>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="business.html">事業内容</a></li>
+                <li><a href="works.html">施工事例</a></li>
+                <li><a href="about.html">会社案内</a></li> 
+                <li><a href="contact.html">お問い合わせ</a></li>
+            </ul>
+        </nav>
+        <div class="lang-switch">
+            <button onclick="translatePage('ja')" class="lang-btn">JP</button>
+            <span class="lang-divider">/</span>
+            <button onclick="translatePage('en')" class="lang-btn">EN</button>
+        </div>
+    </div>
 
     <button class="menu-trigger" id="js-hamburger">
         <span></span>
@@ -218,7 +251,15 @@
         <li><a href="index.html">HOME</a></li>
         <li><a href="business.html">事業内容</a></li>
         <li><a href="works.html">施工事例</a></li>
-        <li><a href="about.html">会社案内</a></li> <li><a href="contact.html">お問い合わせ</a></li>
+        <li><a href="about.html">会社案内</a></li> 
+        <li><a href="contact.html">お問い合わせ</a></li>
+        <li style="margin-top: 30px;">
+            <div class="lang-switch" style="justify-content: center;">
+                <button onclick="translatePage('ja')" class="lang-btn" style="font-size: 1rem;">JP</button>
+                <span class="lang-divider">/</span>
+                <button onclick="translatePage('en')" class="lang-btn" style="font-size: 1rem;">EN</button>
+            </div>
+        </li>
     </ul>
 </nav>
 
@@ -291,6 +332,8 @@
     </footer>
 </div>
 
+<div id="google_translate_element"></div>
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init({ duration: 1500, once: false, offset: 100 });
@@ -339,6 +382,25 @@
             }
         });
     });
+
+    // --- Google翻訳の制御ロジック ---
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'ja',
+            includedLanguages: 'ja,en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+
+    function translatePage(lang) {
+        const select = document.querySelector('select.goog-te-combo');
+        if (select) {
+            select.value = lang;
+            select.dispatchEvent(new Event('change'));
+        }
+    }
 </script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

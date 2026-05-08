@@ -37,7 +37,6 @@
             opacity: 0.12; pointer-events: none; z-index: 9999;
         }
 
-        /* ヘッダー：社名をフルネームに */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 35px 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
@@ -49,16 +48,15 @@
             letter-spacing: 0.25em; color: #fff; text-decoration: none; 
         }
 
-        /* メニュー：日本語に回帰 */
         nav ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
         nav ul li a { 
             text-decoration: none; color: #fff; font-size: 0.75rem; 
-            letter-spacing: 0.15em; transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1); opacity: 0.7; 
+            letter-spacing: 0.15em; transition: 0.5s; opacity: 0.7; 
             font-weight: 300;
         }
         nav ul li a:hover { opacity: 1; color: var(--color-accent); }
 
-        /* メインスライド */
+        /* メインスライドショー */
         .hero-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -2;
         }
@@ -80,10 +78,12 @@
 
         .content-wrapper { position: relative; z-index: 10; }
 
-        .section-vertical {
-            height: 110vh; display: flex; align-items: center; padding: 0 12%; box-sizing: border-box;
+        /* キャッチコピーセクション共通 */
+        .section-copy {
+            height: 100vh; display: flex; align-items: center; box-sizing: border-box;
         }
 
+        /* 1 & 2: 縦書き */
         .copy-vertical {
             writing-mode: vertical-rl;
             font-family: var(--font-serif);
@@ -91,7 +91,6 @@
             font-weight: 200;
             letter-spacing: 0.5em;
             color: #fff;
-            margin-left: auto;
             line-height: 2.2;
             position: relative;
         }
@@ -100,6 +99,27 @@
             content: ""; position: absolute; top: -120px; right: 50%; width: 1px; height: 100px; 
             background: linear-gradient(to bottom, transparent, var(--color-accent));
         }
+
+        /* 3: 横書き（アンカーコピー） */
+        .copy-horizontal {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 200;
+            letter-spacing: 0.4em;
+            color: #fff;
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .copy-horizontal::after {
+            content: ""; display: block; width: 40px; height: 1px; background: var(--color-accent); margin: 40px auto 0;
+        }
+
+        /* セクション内レイアウト設定 */
+        .pos-left { padding-left: 12%; justify-content: flex-start; }
+        .pos-right { padding-right: 12%; justify-content: flex-end; }
+        .pos-center { justify-content: center; }
 
         /* はじめましてセクション */
         .intro-section {
@@ -127,7 +147,7 @@
             box-shadow: 30px 30px 60px rgba(0, 0, 0, 0.5);
         }
         
-        /* 会社情報セクション：日本語・英語併記対応 */
+        /* 住所情報 */
         .info-section {
             background: #000; padding: 150px 80px; border-top: 1px solid #1a1a1a;
         }
@@ -137,13 +157,9 @@
             display: grid; grid-template-columns: 320px 1fr; gap: 40px;
         }
 
-        .info-title { 
-            font-family: var(--font-serif); font-size: 1.3rem; letter-spacing: 0.3em; 
-            color: var(--color-accent);
-        }
+        .info-title { font-family: var(--font-serif); font-size: 1.3rem; letter-spacing: 0.3em; color: var(--color-accent); }
 
         .office-list { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-        
         .office-item { margin-bottom: 40px; }
         .office-item h3 { 
             font-size: 0.8rem; color: #fff; letter-spacing: 0.1em; margin-bottom: 15px; 
@@ -156,19 +172,16 @@
             font-family: var(--font-eng); font-style: italic;
         }
 
-        footer { padding: 60px; text-align: center; font-size: 0.6rem; color: #333; letter-spacing: 0.3em; border-top: 1px solid #0a0a0a; }
-
-        @media (max-width: 1024px) {
-            .office-list { grid-template-columns: 1fr; gap: 60px; }
-        }
+        footer { padding: 60px; text-align: center; font-size: 0.6rem; color: #333; letter-spacing: 0.3em; }
 
         @media (max-width: 768px) {
             header { padding: 25px 30px; flex-direction: column; gap: 15px; }
-            .nav-pc { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            nav ul { gap: 20px; white-space: nowrap; padding-bottom: 5px; }
+            nav ul { gap: 15px; flex-wrap: wrap; justify-content: center; }
             .intro-container { flex-direction: column; padding: 0 40px; }
             .info-grid { grid-template-columns: 1fr; }
-            .section-vertical { padding: 0 15%; }
+            .office-list { grid-template-columns: 1fr; }
+            .copy-vertical { font-size: 1.4rem; }
+            .copy-horizontal { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -176,7 +189,7 @@
 
 <header>
     <a href="index.html" class="logo-text">勝一商店株式会社</a>
-    <nav class="nav-pc">
+    <nav>
         <ul>
             <li><a href="index.html">HOME</a></li>
             <li><a href="business.html">事業内容</a></li>
@@ -196,15 +209,21 @@
 </div>
 
 <div class="content-wrapper">
-    <section class="section-vertical">
+    <section class="section-copy pos-right">
         <div class="copy-vertical" data-aos="fade-down" data-aos-duration="2500">
             物語の続きを、<br>あなたと描く。
         </div>
     </section>
 
-    <section class="section-vertical" style="justify-content: flex-start;">
-        <div class="copy-vertical" style="margin-left: 0;" data-aos="fade-down" data-aos-duration="2500" data-aos-delay="500">
+    <section class="section-copy pos-left">
+        <div class="copy-vertical" data-aos="fade-down" data-aos-duration="2500" data-aos-delay="500">
             時をリノベートする。<br>人生をデザインする。
+        </div>
+    </section>
+
+    <section class="section-copy pos-center">
+        <div class="copy-horizontal" data-aos="fade-up" data-aos-duration="2000">
+            森を活かし、暮らしを「勝」つ。
         </div>
     </section>
 
@@ -270,14 +289,11 @@
 
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
-
     function nextSlide() {
         slides[currentIndex].classList.remove('active');
         currentIndex = (currentIndex + 1) % slides.length;
         slides[currentIndex].classList.add('active');
     }
-
-    // 6秒ごとにスライド。ズーム効果を楽しめるよう少し長めに設定。
     setInterval(nextSlide, 6000);
 </script>
 

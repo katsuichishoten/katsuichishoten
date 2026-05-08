@@ -24,6 +24,7 @@
             overflow-x: hidden;
         }
 
+        /* ヘッダー：日本語メニュー */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 40px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
@@ -37,6 +38,7 @@
         nav ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.1em; transition: 0.3s; opacity: 0.8; }
         nav ul li a:hover { opacity: 1; color: var(--accent-color); }
 
+        /* 背景固定スライドショー */
         .hero-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
@@ -56,6 +58,7 @@
             background: rgba(0, 0, 0, 0.4); z-index: -1;
         }
 
+        /* コンテンツレイアウト */
         .content-wrapper { position: relative; z-index: 1; width: 100%; }
 
         .scroll-section {
@@ -81,7 +84,7 @@
             white-space: nowrap;
         }
 
-        /* はじめての方へ（メッセージ）セクション */
+        /* はじめましてセクション（背景と一緒にスクロール） */
         .intro-section {
             background-color: #000;
             padding: 150px 0;
@@ -117,10 +120,7 @@
             letter-spacing: 0.08em;
         }
 
-        .intro-text .highlight {
-            color: #fff;
-            font-weight: 400;
-        }
+        .intro-text .highlight { color: #fff; font-weight: 400; }
 
         .intro-image { flex: 0.8; position: sticky; top: 150px; }
         .intro-image img {
@@ -157,10 +157,10 @@
     <nav>
         <ul>
             <li><a href="index.html">HOME</a></li>
-            <li><a href="about.html">ABOUT</a></li>
-            <li><a href="business.html">BUSINESS</a></li>
-            <li><a href="works.html">WORKS</a></li>
-            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="about.html">会社案内</a></li>
+            <li><a href="business.html">事業内容</a></li>
+            <li><a href="works.html">施工事例</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
         </ul>
     </nav>
 </header>
@@ -194,7 +194,7 @@
     <section class="intro-section">
         <div class="intro-container">
             <div class="intro-text" data-aos="fade-up" data-aos-duration="1200">
-                <h2>はじめて訪れた方へ</h2>
+                <h2>はじめまして、勝一商店です。</h2>
                 <p>
                     たとえば、古い梁に刻まれた傷跡に。<br>
                     たとえば、北海道の森が育てた木の手触りに。<br>
@@ -228,13 +228,13 @@
                 </p>
             </div>
             <div class="intro-image" data-aos="fade-left" data-aos-duration="1200">
-                <img src="IMG_5250.JPG" alt="勝一商店のフィロソフィー">
+                <img src="IMG_7222.jpg" alt="勝一商店の古材">
             </div>
         </div>
     </section>
 
     <footer>
-        &copy; 勝一商店株式会社
+        &copy; 勝一商店株式会社 All Rights Reserved.
     </footer>
 </div>
 
@@ -242,6 +242,7 @@
 <script>
     AOS.init({ once: false });
 
+    // スライドショー（3秒）
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
     function nextSlide() {

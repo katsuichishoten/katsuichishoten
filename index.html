@@ -132,7 +132,7 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
-        /* ★新設：会社情報セクション */
+        /* 会社情報セクション */
         .company-info-section {
             background-color: #000;
             padding: 100px 50px;
@@ -294,7 +294,7 @@
             <div class="office-grid">
                 <div class="office-item">
                     <h3>MIDCITY Office（本社）</h3>
-                    <p>〒070-0825 北海道旭川市北門町１３丁目２９４１−９</p>
+                    <p>〒070-0825 北海道旭川市北門町１３丁目２９４1−９</p>
                     <p class="address-en">13-2941-9 Hokumon-cho Asahikawa-shi Hokkaido 070-0825 Japan</p>
                 </div>
 
@@ -316,6 +316,7 @@
 <script>
     AOS.init({ once: false });
 
+    // スライドショー制御
     const slides = document.querySelectorAll('.slide');
     let currentIndex = 0;
     function nextSlide() {
@@ -323,6 +324,7 @@
         currentIndex = (currentIndex + 1) % slides.length;
         slides[currentIndex].classList.add('active');
     }
+    // 3秒ごとに切り替え
     setInterval(nextSlide, 3000);
 </script>
 

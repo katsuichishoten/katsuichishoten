@@ -30,21 +30,28 @@
             line-height: 1.8;
         }
 
-        body.nav-open { overflow: hidden; }
+        /* 共通の粒子テクスチャ */
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.08; pointer-events: none; z-index: 9999;
+        }
 
         /* --- ヘッダー --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box;
             z-index: 2000; height: var(--header-height);
-            background: rgba(10, 10, 10, 0.9);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .logo-image { height: 40px; width: auto; }
+        .logo-image { height: 40px; width: auto; transition: 0.3s; }
+        .logo-image:hover { opacity: 0.7; }
 
-        .nav-pc ul { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; }
-        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; opacity: 0.7; transition: 0.5s; }
+        .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
+        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; opacity: 0.6; transition: 0.5s; }
         .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
 
         .menu-trigger { display: none; width: 30px; height: 24px; position: relative; z-index: 3000; background: none; border: none; cursor: pointer; }
@@ -60,70 +67,101 @@
         .nav-sp.active { right: 0; visibility: visible; }
         .nav-sp ul { list-style: none; padding: 0; text-align: center; }
         .nav-sp ul li { margin-bottom: 30px; }
-        .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; font-family: var(--font-serif); }
+        .nav-sp ul li a { color: #fff; text-decoration: none; font-size: 1.2rem; font-family: var(--font-serif); letter-spacing: 0.2em; }
 
         /* --- ヒーローエリア --- */
         .page-header {
-            height: 40vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative; overflow: hidden; margin-top: var(--header-height);
+        }
+        .page-header-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('IMG_7222.jpg') center/cover;
-            margin-top: var(--header-height);
+            z-index: -1; animation: heroSlowZoom 20s infinite alternate;
         }
+        @keyframes heroSlowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
 
-        .page-header h1 { font-family: var(--font-serif); font-size: 2.5rem; letter-spacing: 0.2em; margin: 0; font-weight: 200; }
-        .page-header span { font-family: var(--font-eng); color: var(--color-accent); font-size: 0.9rem; letter-spacing: 0.4em; margin-top: 10px; }
+        .page-header h1 { font-family: var(--font-serif); font-size: 2.8rem; letter-spacing: 0.25em; margin: 0; font-weight: 200; }
+        .page-header span { font-family: var(--font-eng); color: var(--color-accent); font-size: 0.9rem; letter-spacing: 0.5em; margin-top: 15px; opacity: 0.8; }
 
-        /* --- 会社概要テーブル --- */
-        .about-section { max-width: 1000px; margin: 100px auto; padding: 0 40px; }
+        /* --- 会社概要 --- */
+        .about-section { max-width: 1000px; margin: 120px auto; padding: 0 40px; }
         
-        .profile-table { width: 100%; border-collapse: collapse; margin-bottom: 100px; }
-        .profile-table tr { border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .profile-table th { 
-            width: 25%; padding: 40px 0; text-align: left; font-family: var(--font-serif); 
-            color: var(--color-accent); font-weight: 400; font-size: 1.1rem; letter-spacing: 0.1em;
+        .profile-table { width: 100%; border-collapse: collapse; margin-bottom: 120px; }
+        
+        /* 行のふわっとした出現 */
+        .profile-table tr { 
+            border-bottom: 1px solid rgba(255,255,255,0.08); 
+            opacity: 0; transform: translateX(-20px);
+            transition: 1s cubic-bezier(0.215, 0.61, 0.355, 1);
         }
-        .profile-table td { padding: 40px 0; font-size: 0.95rem; font-weight: 300; color: #eee; }
+        .profile-table.aos-animate tr { opacity: 1; transform: translateX(0); }
+        .profile-table tr:nth-child(1) { transition-delay: 0.1s; }
+        .profile-table tr:nth-child(2) { transition-delay: 0.2s; }
+        .profile-table tr:nth-child(3) { transition-delay: 0.3s; }
+        .profile-table tr:nth-child(4) { transition-delay: 0.4s; }
+        .profile-table tr:nth-child(5) { transition-delay: 0.5s; }
+
+        .profile-table th { 
+            width: 25%; padding: 45px 0; text-align: left; font-family: var(--font-serif); 
+            color: var(--color-accent); font-weight: 400; font-size: 1.1rem; letter-spacing: 0.2em;
+        }
+        .profile-table td { padding: 45px 0; font-size: 1rem; font-weight: 300; color: #ccc; }
 
         .business-list { list-style: none; padding: 0; margin: 0; }
-        .business-list li { margin-bottom: 10px; position: relative; padding-left: 20px; }
+        .business-list li { margin-bottom: 12px; position: relative; padding-left: 25px; transition: 0.3s; }
         .business-list li::before { 
-            content: ""; position: absolute; left: 0; top: 12px; width: 6px; height: 1px; background: var(--color-accent); 
+            content: ""; position: absolute; left: 0; top: 13px; width: 8px; height: 1px; background: var(--color-accent); 
         }
+        .business-list li:hover { color: var(--color-accent); transform: translateX(5px); }
 
-        /* --- アクセス・拠点 --- */
-        .access-section { background: #000; padding: 120px 0; }
+        /* --- 拠点案内 --- */
+        .access-section { background: #000; padding: 140px 0; position: relative; }
         .access-container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
         
         .section-title-accent {
-            font-family: var(--font-serif); font-size: 1.8rem; text-align: center; margin-bottom: 80px; letter-spacing: 0.2em;
+            font-family: var(--font-serif); font-size: 2rem; text-align: center; margin-bottom: 100px; letter-spacing: 0.3em;
         }
         .section-title-accent::after {
-            content: ""; display: block; width: 40px; height: 1px; background: var(--color-accent); margin: 30px auto 0;
+            content: ""; display: block; width: 60px; height: 1px; background: var(--color-accent); margin: 35px auto 0;
+            transform: scaleX(0); transition: 1.5s;
         }
+        .access-section.aos-animate .section-title-accent::after { transform: scaleX(1); }
 
         .office-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-        .office-card h3 { 
-            font-family: var(--font-serif); font-size: 1.2rem; color: #fff; margin-bottom: 25px; 
-            border-bottom: 1px solid #222; padding-bottom: 15px; font-weight: 400;
+        
+        .office-card {
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 50px;
+            background: rgba(255,255,255,0.01);
+            transition: 0.5s;
+            position: relative;
         }
-        .office-card .company-name { color: var(--color-accent); font-size: 0.9rem; margin-bottom: 10px; display: block; letter-spacing: 0.1em; }
-        .office-card .address-jp { font-size: 0.9rem; color: #ccc; margin-bottom: 10px; line-height: 1.8; }
-        .office-card .address-en { font-family: var(--font-eng); font-size: 0.75rem; color: #666; font-style: italic; line-height: 1.6; }
+        .office-card:hover { 
+            border-color: var(--color-accent);
+            background: rgba(191, 160, 113, 0.05);
+            transform: translateY(-5px);
+        }
 
-        footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; border-top: 1px solid #1a1a1a; }
+        .office-card h3 { 
+            font-family: var(--font-serif); font-size: 1.3rem; color: #fff; margin-bottom: 30px; 
+            border-bottom: 1px solid #222; padding-bottom: 20px; font-weight: 400; letter-spacing: 0.1em;
+        }
+        .office-card .company-name { color: var(--color-accent); font-size: 0.95rem; margin-bottom: 15px; display: block; letter-spacing: 0.15em; }
+        .office-card .address-jp { font-size: 0.95rem; color: #bbb; margin-bottom: 15px; line-height: 2; }
+        .office-card .address-en { font-family: var(--font-eng); font-size: 0.8rem; color: #555; font-style: italic; line-height: 1.8; }
+
+        footer { padding: 80px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; border-top: 1px solid #1a1a1a; }
 
         @media (max-width: 768px) {
             header { padding: 0 30px; height: var(--header-height-sp); }
             .nav-pc { display: none; }
             .menu-trigger { display: block; }
-            .page-header h1 { font-size: 1.8rem; }
-            .profile-table th { width: 100%; display: block; padding: 20px 0 10px; }
-            .profile-table td { width: 100%; display: block; padding: 0 0 20px; }
-            .office-grid { grid-template-columns: 1fr; gap: 60px; }
-            .about-section { margin: 60px auto; }
+            .page-header h1 { font-size: 2rem; }
+            .profile-table th { width: 100%; display: block; padding: 30px 0 10px; }
+            .profile-table td { width: 100%; display: block; padding: 0 0 30px; }
+            .office-grid { grid-template-columns: 1fr; gap: 40px; }
+            .office-card { padding: 35px; }
         }
     </style>
 </head>
@@ -136,8 +174,7 @@
             <li><a href="index.html">HOME</a></li>
             <li><a href="business.html">事業内容</a></li>
             <li><a href="works.html">施工事例</a></li>
-            <li><a href="会社案内.html">会社案内</a></li>
-            <li><a href="contact.html">お問い合わせ</a></li>
+            <li><a href="about.html">会社案内</a></li> <li><a href="contact.html">お問い合わせ</a></li>
         </ul>
     </nav>
     <button class="menu-trigger" id="js-hamburger"><span></span><span></span><span></span></button>
@@ -148,14 +185,14 @@
         <li><a href="index.html">HOME</a></li>
         <li><a href="business.html">事業内容</a></li>
         <li><a href="works.html">施工事例</a></li>
-        <li><a href="about.html">会社案内</a></li>
-        <li><a href="contact.html">お問い合わせ</a></li>
+        <li><a href="about.html">会社案内</a></li> <li><a href="contact.html">お問い合わせ</a></li>
     </ul>
 </nav>
 
 <div class="page-header">
-    <h1 data-aos="fade-up">会社案内</h1>
-    <span data-aos="fade-up" data-aos-delay="200">COMPANY PROFILE</span>
+    <div class="page-header-bg"></div>
+    <h1 data-aos="fade-up" data-aos-duration="1500">会社案内</h1>
+    <span data-aos="fade-up" data-aos-delay="300" data-aos-duration="1500">COMPANY PROFILE</span>
 </div>
 
 <div class="about-section">
@@ -196,19 +233,19 @@
     </table>
 </div>
 
-<section class="access-section">
+<section class="access-section" data-aos="fade-up">
     <div class="access-container">
-        <h2 class="section-title-accent" data-aos="fade-up">拠点案内</h2>
+        <h2 class="section-title-accent">拠点案内</h2>
         
         <div class="office-grid">
-            <div class="office-card" data-aos="fade-up">
+            <div class="office-card" data-aos="fade-up" data-aos-delay="200">
                 <h3>MIDCITY Office</h3>
                 <span class="company-name">勝一商店株式会社</span>
                 <p class="address-jp">〒070-0825 北海道旭川市北門町１３丁目２９４１−９</p>
                 <p class="address-en">13-2941-9 Hokumon-cho Asahikawa-shi Hokkaido 070-0825 Japan</p>
             </div>
 
-            <div class="office-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="office-card" data-aos="fade-up" data-aos-delay="400">
                 <h3>東川町サテライトオフィス</h3>
                 <span class="company-name">KAGUの家 / ULTRA BUSSANTEN</span>
                 <p class="address-jp">〒071-1423 北海道上川郡東川町東町1丁目7番17号 (C棟)</p>
@@ -222,7 +259,7 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({ duration: 1200, once: true });
+    AOS.init({ duration: 1500, once: false, offset: 100 });
     
     const hamburger = document.getElementById('js-hamburger');
     const navSp = document.getElementById('js-nav-sp');

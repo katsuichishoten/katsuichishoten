@@ -1,1 +1,111 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ | 勝一商店</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0a0a0a; --color-text: #ffffff; --color-accent: #bfa071;
+            --font-serif: 'Noto Serif JP', serif; --font-eng: 'Playfair Display', serif;
+            --header-height: 90px;
+        }
+        body { margin: 0; padding: 0; background-color: var(--color-bg); color: var(--color-text); font-family: 'Noto Sans JP', sans-serif; line-height: 1.8; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com/patterns/stardust.pattern'); opacity: 0.12; pointer-events: none; z-index: 9999; }
+        
+        /* ヘッダーデザイン（英語版と完全統一） */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 0 60px; position: fixed; top: 0; width: 100%; box-sizing: border-box; z-index: 2000; background: rgba(0,0,0,0.9); height: var(--header-height); }
+        .logo-image { height: 45px; width: auto; display: block; opacity: 0.95; }
+        .nav-pc { display: flex; align-items: center; }
+        .nav-pc ul { list-style: none; display: flex; gap: 35px; margin: 0; padding: 0; }
+        .nav-pc ul li a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 0.15em; transition: 0.5s; opacity: 0.75; font-weight: 300; }
+        .nav-pc ul li a:hover { opacity: 1; color: var(--color-accent); }
+        .lang-switch { display: flex; align-items: center; gap: 12px; margin-left: 35px; font-family: var(--font-eng); }
+        .lang-btn { text-decoration: none; color: #fff; font-size: 0.7rem; opacity: 0.4; transition: 0.3s; letter-spacing: 0.15em; }
+        .lang-btn.active { opacity: 1; pointer-events: none; }
+
+        .page-header { padding-top: 180px; padding-bottom: 60px; text-align: center; }
+        .page-title-jp { font-family: var(--font-serif); font-size: 3rem; letter-spacing: 0.2em; color: var(--color-accent); display: block; }
+        .page-title-en { font-family: var(--font-eng); font-size: 0.9rem; letter-spacing: 0.5em; opacity: 0.5; margin-top: 10px; display: block; }
+
+        /* フォームのデザイン */
+        .contact-container { max-width: 700px; margin: 0 auto 150px; padding: 0 40px; }
+        .contact-form { display: flex; flex-direction: column; gap: 40px; }
+        .form-group { position: relative; }
+        .form-group label { display: block; font-family: var(--font-serif); font-size: 0.85rem; color: var(--color-accent); margin-bottom: 10px; letter-spacing: 0.1em; }
+        .form-group input, .form-group textarea { width: 100%; background: none; border: none; border-bottom: 1px solid #333; color: #fff; padding: 10px 0; font-size: 1rem; border-radius: 0; outline: none; transition: 0.3s; }
+        .form-group input:focus, .form-group textarea:focus { border-bottom: 1px solid var(--color-accent); }
+        .form-group textarea { min-height: 150px; resize: vertical; }
+
+        .submit-btn { background: none; border: 1px solid var(--color-accent); color: var(--color-accent); padding: 18px 60px; font-family: var(--font-serif); font-size: 1rem; cursor: pointer; transition: 0.4s; align-self: center; letter-spacing: 0.2em; margin-top: 20px; }
+        .submit-btn:hover { background: var(--color-accent); color: #000; }
+
+        footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; background: #000; }
+
+        @media (max-width: 768px) {
+            header { padding: 0 30px; height: 70px; }
+            .nav-pc { display: none; }
+            .page-title-jp { font-size: 2rem; }
+            .contact-container { padding: 0 30px; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <a href="index.html"><img src="看板_540×450mm_1_out_1-01.png" alt="Logo" class="logo-image"></a>
+    <nav class="nav-pc">
+        <ul>
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="business.html">事業内容</a></li>
+            <li><a href="works.html">施工事例</a></li>
+            <li><a href="about.html">会社案内</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+        <div class="lang-switch">
+            <span class="lang-btn active">JP</span><span style="color:rgba(255,255,255,0.2)">/</span><a href="en/contact.html" class="lang-btn">EN</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="page-header" data-aos="fade-down">
+        <span class="page-title-jp">お問い合わせ</span>
+        <span class="page-title-en">CONTACT</span>
+    </div>
+
+    <div class="contact-container" data-aos="fade-up">
+        <!-- 
+            ACTIONのURLは、Formspree(https://formspree.io/)で
+            発行したIDを「your-id」の部分に入れてください。
+        -->
+        <form action="https://formspree.io/f/your-id" method="POST" class="contact-form">
+            <div class="form-group">
+                <label>お名前</label>
+                <input type="text" name="name" required placeholder="勝一 太郎">
+            </div>
+            <div class="form-group">
+                <label>メールアドレス</label>
+                <input type="email" name="_replyto" required placeholder="example@mail.com">
+            </div>
+            <div class="form-group">
+                <label>お問い合わせ内容</label>
+                <textarea name="message" required placeholder="ご質問やご相談内容をご記入ください"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">送信する</button>
+        </form>
+    </div>
+</main>
+
+<footer>&copy; Katsuichi Shoten Co., Ltd.</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1200, once: true });
+</script>
+</body>
+</html>

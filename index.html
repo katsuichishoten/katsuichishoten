@@ -190,23 +190,65 @@
         footer { padding: 60px; text-align: center; font-size: 0.65rem; color: #444; letter-spacing: 0.2em; font-family: var(--font-serif); background: #000; }
 
         /* --- レスポンシブ --- */
-        @media (max-width: 768px) {
-            header { padding: 0 30px; height: var(--header-height-sp); background: rgba(0,0,0,0.85); }
-            .logo-image { height: 38px; }
-            .nav-pc { display: none; }
-            .menu-trigger { display: block; }
-            .intro-container { flex-direction: column; gap: 50px; padding: 0 30px; }
-            .intro-image-wrap::after { display: none; }
-            .intro-text h2 { font-size: 1.8rem; }
-            .copy-vertical { font-size: 1.4rem; }
-            .copy-horizontal { font-size: 1.3rem; line-height: 1.8; }
-            .copy-horizontal span { display: block; }
-            .info-grid { grid-template-columns: 1fr; }
-            .office-list { grid-template-columns: 1fr; gap: 40px; }
-            .info-section { padding: 100px 40px; }
-            /* スマホ用スイッチ調整（ご提示いただいたコード） */
-            .lang-switch { margin-left: 0; margin-top: 20px; }
-        }
+       @media (max-width: 768px) {
+    /* ヘッダー：より細く、よりミニマルに */
+    header {
+        padding: 0 20px;
+        height: 65px;
+    }
+    .logo-image {
+        height: 32px; /* 小さくして余白を強調 */
+    }
+
+    /* ページヘッダー：文字を小さくして「空間」を見せる */
+    .page-header {
+        padding-top: 130px;
+        padding-bottom: 50px;
+    }
+    .page-title-jp, .page-title {
+        font-size: 1.4rem !important; /* あえて小さく */
+        letter-spacing: 0.4em !important;
+        font-weight: 300;
+    }
+    .page-title-en {
+        font-size: 0.65rem !important;
+        letter-spacing: 0.3em;
+        opacity: 0.4;
+    }
+
+    /* コンテンツエリア：左右にたっぷり贅沢な余白を */
+    .business-section, .about-container, .contact-container, .works-grid {
+        padding: 0 30px 100px !important;
+    }
+
+    /* 事業内容・施工事例：画像を画面端まで広げず、浮かせた印象に */
+    .item, .business-item, .works-item {
+        margin-bottom: 80px !important;
+    }
+    .item img, .business-img img, .works-img-wrap {
+        margin-bottom: 25px;
+    }
+    .item-text h3, .business-text h3, .works-name {
+        font-size: 1.3rem !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* 会社案内（テーブル）：縦並びに崩さず、文字を極限まで削ぎ落とす */
+    .profile-table th, .profile-table td {
+        padding: 20px 0 !important;
+        font-size: 0.8rem;
+    }
+
+    /* フォーム：入力欄を「ただの細い線」に */
+    .form-group {
+        margin-bottom: 35px;
+    }
+    .submit-btn {
+        width: 100%;
+        font-size: 0.85rem;
+        padding: 16px 0;
+    }
+}
     </style>
 </head>
 <body>
